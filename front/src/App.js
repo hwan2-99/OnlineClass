@@ -1,11 +1,10 @@
-import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./page/Home";
 import Login from "./page/Login";
 import Student from "./page/Student";
 import Profesor from "./page/Profesor";
 import NotFound from "./page/NotFound";
-import ProfLayout from "./layout/ProfLayout";
+import "antd/dist/antd.css";
 
 function App() {
   return (
