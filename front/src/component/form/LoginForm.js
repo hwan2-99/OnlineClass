@@ -1,12 +1,17 @@
 import React from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import userHandler from "../../lib/handler/userHandler";
+import { useDispatch } from "react-redux";
 
-const LoginForm = () => {
-  const onFinish = async (value) => {
-    console.log("Sucess: ", value);
+const LoginForm = (props) => {
+  const dispatch = useDispatch();
+
+  const onLogInHandler = async (value) => {
     let result = await userHandler.login(value);
-    console.log(result);
+
+    if (result) {
+      dispatch({ type: "login", info: result });
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -25,7 +30,7 @@ const LoginForm = () => {
       initialValues={{
         remember: true,
       }}
-      onFinish={onFinish}
+      onFinish={onLogInHandler}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >

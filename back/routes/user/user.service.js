@@ -34,7 +34,7 @@ module.exports = {
       console.log("로그인 정보 :", loginInfo);
       const conn = await pool.getConnection();
 
-      const { username, password, isProf } = loginInfo;
+      const { username, password, isProf = false } = loginInfo;
       const query =
         isProf === true
           ? `Select * from professor where prof_email = ? and password = ?`
@@ -47,8 +47,7 @@ module.exports = {
 
       const [[result]] = await conn.query(query, [username, password]);
 
-      console.log("쿼리 실행 결과 :", result);
-
+      result.isProf = isProf;
       return result;
     } catch (error) {
       return error;

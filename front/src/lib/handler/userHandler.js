@@ -24,13 +24,11 @@ const userHandler = {
     try {
       let apiResult = await User.login(user);
 
-      const result = apiResult;
+      const body = await apiResult.json();
 
       //로그인 로직 처리
-      console.log(result);
-
-      if (result.status === SUCCESS) {
-        return true;
+      if (body.status === SUCCESS) {
+        return body.data;
       } else {
         return false;
       }

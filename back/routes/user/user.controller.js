@@ -8,6 +8,7 @@ const UserService = require("./user.service");
 router.post("/login", async (req, res) => {
   try {
     const result = await UserService.loginUser(req.body);
+    console.log("db결과", result);
 
     if (result !== undefined) {
       return res
@@ -17,7 +18,7 @@ router.post("/login", async (req, res) => {
       return res.status(500).json({ status: 500, message: "로그인 실패" });
     }
   } catch (error) {
-    return res.status(200).json({ status: 500, message: "오류 발생" });
+    return res.status(500).json({ status: 500, message: "오류 발생" });
   }
 });
 
