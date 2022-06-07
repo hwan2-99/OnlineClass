@@ -10,4 +10,10 @@ router.post("/login", async (req, res) => {
   } catch (error) {}
 });
 
+router.post("/signup", async (req, res) => {
+  try {
+    console.log(req.body);
+  } catch (error) {}
+});
+
 module.exports = router;

@@ -3,7 +3,8 @@ import ProfLayout from "../layout/ProfLayout";
 
 const Proffesor = () => {
   return (
-    <ProfLayout>
+    <>
+      <ProfLayout />
       <div>
         <h1>교수페이지</h1>
         <ul>
@@ -14,7 +15,7 @@ const Proffesor = () => {
           <li>FAQ관리</li>
         </ul>
       </div>
-    </ProfLayout>
+    </>
   );
 };
 

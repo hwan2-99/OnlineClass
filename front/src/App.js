@@ -5,6 +5,7 @@ import Student from "./page/Student";
 import Profesor from "./page/Profesor";
 import NotFound from "./page/NotFound";
 import "antd/dist/antd.css";
+import SignUp from "./page/SignUp";
 
 function App() {
   return (
@@ -16,9 +17,11 @@ function App() {
           <Link to={"log"}>로그인</Link>
           <Link to={"prof"}>교수</Link>
           <Link to={"stud"}>학생</Link>
+          <Link to={"signup"}>회원가입</Link>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="log" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
             <Route path="prof" element={<Profesor />} />
             <Route path="stud" element={<Student />} />
             <Route path="*" element={<NotFound />} />
