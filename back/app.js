@@ -4,10 +4,13 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 //라우터 설정
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/user/index");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/user/index");
+const profRouter = require("./routes/prof/index");
 
 var app = express();
 
@@ -21,9 +24,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static("uploads"));
 
 app.use("/", indexRouter);
 app.use("/user", usersRouter);
+app.use("/prof", profRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
