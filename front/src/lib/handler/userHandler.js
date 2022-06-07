@@ -8,10 +8,10 @@ const userHandler = {
     try {
       let apiResult = await User.signUp(user);
 
-      const { status } = apiResult;
+      const result = apiResult;
 
-      if (status === SUCCESS) {
-        return true;
+      if (result.status === SUCCESS) {
+        return result;
       }
     } catch (error) {
       console.log("SignUp Fail");
@@ -24,12 +24,15 @@ const userHandler = {
     try {
       let apiResult = await User.login(user);
 
-      const { status } = apiResult;
+      const result = apiResult;
 
       //로그인 로직 처리
+      console.log(result);
 
-      if (status === SUCCESS) {
+      if (result.status === SUCCESS) {
         return true;
+      } else {
+        return false;
       }
     } catch (error) {
       console.log("Login Fail");

@@ -56,14 +56,14 @@ const LoginForm = () => {
       </Form.Item>
 
       <Form.Item
-        name="remember"
+        name="isProf"
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
           span: 16,
         }}
       >
-        <Checkbox>Remember me</Checkbox>
+        <Checkbox>교수로 로그인 하기</Checkbox>
       </Form.Item>
 
       <Form.Item
