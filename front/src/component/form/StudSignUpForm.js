@@ -1,12 +1,15 @@
 import React from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import userHandler from "../../lib/handler/userHandler";
+import { useNavigate } from "react-router-dom";
 
 const StudSignUpForm = () => {
+  let navigate = useNavigate();
+
   const onFinish = async (value) => {
     console.log("Sucess: ", value);
     let result = await userHandler.signUp(value);
-    console.log(result);
+    navigate("/log", { replace: true });
   };
 
   const onFinishFailed = (errorInfo) => {

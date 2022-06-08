@@ -26,9 +26,10 @@ const userHandler = {
 
       const body = await apiResult.json();
 
+      console.log(body);
       //로그인 로직 처리
       if (body.status === SUCCESS) {
-        return body.data;
+        return { status: body.status, data: body.data };
       } else {
         return false;
       }

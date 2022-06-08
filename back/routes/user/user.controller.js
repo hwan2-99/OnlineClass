@@ -10,7 +10,7 @@ router.post("/login", async (req, res) => {
     const result = await UserService.loginUser(req.body);
     console.log("db결과", result);
 
-    if (result !== undefined) {
+    if (Object.keys(result).length > 0) {
       return res
         .status(200)
         .json({ status: 200, data: result, message: "로그인 성공" });

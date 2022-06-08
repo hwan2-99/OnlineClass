@@ -2,15 +2,23 @@ import React from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import userHandler from "../../lib/handler/userHandler";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = (props) => {
   const dispatch = useDispatch();
 
+  let navigate = useNavigate();
+
   const onLogInHandler = async (value) => {
     let result = await userHandler.login(value);
 
+    console.log(result);
+
     if (result) {
-      dispatch({ type: "login", info: result });
+      dispatch({ type: "login", info: result.data });
+
+      //교수로 넘어 올 때~
+      navigate("/prof", { replace: true });
     }
   };
 
