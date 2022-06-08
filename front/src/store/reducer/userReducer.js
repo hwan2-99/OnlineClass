@@ -14,7 +14,7 @@ const userReducer = (state = userInitialState, action) => {
       return {
         isLogIn: true,
         isProf: info.isProf,
-        num: info.p_num,
+        num: info.prof_num,
         email: info.prof_email,
         name: info.prof_name,
       };

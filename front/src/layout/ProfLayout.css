@@ -10,20 +10,24 @@
 .wrapper {
   width: 100%;
   height: 800px;
+  padding: 10px;
 }
 
 .prof-body {
   display: flex;
   justify-content: center;
-  height: 800px;
+  height: 100%;
+  padding: 10px;
 }
 
 .class-main {
   width: 30%;
+  padding: 10px;
   background-color: rgb(233, 232, 232);
 }
 
 .video-main {
   width: 70%;
+  padding: 10px;
   background-color: rgb(227, 227, 227);
 }
