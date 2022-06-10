@@ -10,6 +10,7 @@ import "antd/dist/antd.css";
 import SignUp from "./page/SignUp";
 import classes from "./app.module.css";
 import ClassOpen from "./component/form/ClassOpen";
+import Course from "./component/stud/Course";
 
 function App() {
   return (
@@ -35,7 +36,9 @@ function App() {
               <Route path="class:classnum" element={<VideoMain />} />
               <Route path="open" element={<ClassOpen />} />
             </Route>
-            <Route path="stud" element={<Student />} />
+            <Route path="stud" element={<Student />} >
+              <Route path="class:classnum" element={<Course/>}/>
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

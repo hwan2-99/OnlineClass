@@ -1,17 +1,21 @@
 import React from "react";
+import { Link, Outlet } from "react-router-dom";
+import RegisterCourse from "../component/stud/RegisterCourse";
 
 const Student = () => {
   return (
+    <>
     <div>
-      <h1>학생 페이지</h1>
-      <ul>
-        <li>강좌 보기</li>
-        <li>강좌 신청하기</li>
-        <li>학습 하기</li>
-        <li>Q&A 보내기 </li>
-        <li>FAQ 보기</li>
-      </ul>
+      <div>로고</div>
+      <Link to="class:1">강좌목록</Link>
+      <div>
+        내가 듣는 강좌 목록
+        <Outlet/>
+      </div>
+      <RegisterCourse/>
     </div>
+    </>
+    
   );
 };
 
