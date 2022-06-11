@@ -18,6 +18,14 @@ const prof = {
       },
     });
   },
+  getAllClassList: () => {
+    return fetch(CREATE_API + "prof/classlist", {
+      method: "get",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  },
 };
 
 export default prof;

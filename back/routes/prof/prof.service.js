@@ -37,7 +37,7 @@ module.exports = {
       return error;
     }
   },
-  getClassList: async (num) => {
+  getProfClassList: async (num) => {
     try {
       const conn = await pool.getConnection();
 
@@ -47,6 +47,22 @@ module.exports = {
 
       return result;
     } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
+  getAllClassList: async () => {
+    try {
+      const conn = await pool.getConnection();
+
+      const query = `Select * from course`;
+
+      const [result] = await conn.query(query);
+
+      return result;
+    } catch (error) {
+      console.log(error);
       return error;
     }
   },
