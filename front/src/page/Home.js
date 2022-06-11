@@ -23,6 +23,14 @@ const Home = () => {
           <Link to={"signup"}>회원가입</Link>
         </div>
       )}
+      <h1>TodoList</h1>
+      <ol>
+        <li>라우터 설정 교수 학생</li>
+        <li>동영상 업로드 만들기</li>
+        <li>Q&A 만들기</li>
+        <li>전체적인 레이아웃 구성</li>
+        <li>강의 신청 해놓기</li>
+      </ol>
     </div>
   );
 };

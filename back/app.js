@@ -11,6 +11,7 @@ const upload = multer({ dest: "uploads/" });
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/user/index");
 const profRouter = require("./routes/prof/index");
+const studRouter = require("./routes/stud/index");
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/", indexRouter);
 app.use("/user", usersRouter);
 app.use("/prof", profRouter);
+app.use("/stud", studRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

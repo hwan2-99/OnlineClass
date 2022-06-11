@@ -16,9 +16,13 @@ const LoginForm = (props) => {
 
     if (result) {
       dispatch({ type: "login", info: result.data });
-
-      //교수로 넘어 올 때~
-      navigate("/prof", { replace: true });
+      if (result.data.isProf) {
+        //교수로 넘어 올 때~
+        navigate("/prof", { replace: true });
+      } else {
+        //학생으로 넘어 올 때~
+        navigate("/stud", { replace: true });
+      }
     }
   };
 

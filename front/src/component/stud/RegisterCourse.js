@@ -35,6 +35,8 @@ const RegisterCourse = () => {
           return (
             <CourseRegist
               key={course.course_num}
+              course_num={course.course_num}
+              prof_num={course.prof_num}
               course_name={course.course_name}
               capacity={course.capacity}
               course_term={course.course_term}
