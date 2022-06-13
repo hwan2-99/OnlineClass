@@ -1,17 +1,15 @@
-import { Routes, Route, Link, Outlet } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import Home from "./page/Home";
 import Login from "./page/Login";
 import Student from "./page/Student";
 import Profesor from "./page/Profesor";
 import VideoMain from "./component/prof/VideoMain";
-import VideoQA from "./component/prof/VideoQA";
 import NotFound from "./page/NotFound";
 import "antd/dist/antd.css";
 import SignUp from "./page/SignUp";
 import classes from "./app.module.css";
 import ClassOpen from "./component/form/ClassOpen";
-import Course from "./component/stud/CourseRegist";
-import MyCourse from "./component/stud/MyCourse";
+import StudMain from "./component/stud/StudMain";
 
 function App() {
   return (
@@ -34,11 +32,11 @@ function App() {
             <Route path="log" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="prof" element={<Profesor />}>
-              <Route path="class:classnum" element={<VideoMain />} />
+              <Route path="class/:classnum" element={<VideoMain />} />
               <Route path="open" element={<ClassOpen />} />
             </Route>
             <Route path="stud" element={<Student />}>
-              <Route path="class:classnum" element={<MyCourse />} />
+              <Route path="class/:classnum" element={<StudMain />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

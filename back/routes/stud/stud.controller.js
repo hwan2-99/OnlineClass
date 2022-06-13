@@ -15,4 +15,17 @@ router.post("/register", async (req, res) => {
   }
 });
 
+router.get("/class/:studnum", async (req, res) => {
+  try {
+    console.log(req.params);
+    const result = await studService.getMyClassList(req.params.studnum);
+    console.log(result);
+    return res
+      .status(200)
+      .json({ status: 200, data: result, message: "리스트 가져오기 성공" });
+  } catch (error) {
+    return res.status(200).json({ status: 500, message: "오류 발생" });
+  }
+});
+
 module.exports = router;

@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./VideoMain.module.css";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import VideoUpload from "../form/VideoUploadForm";
 import BasicModal from "../../layout/BasicModal";
 

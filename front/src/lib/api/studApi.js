@@ -10,5 +10,23 @@ const studApi = {
       body: JSON.stringify(info),
     });
   },
+
+  studClassList: (num) => {
+    return fetch(CREATE_API + "stud/class/" + num, {
+      method: "get",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  },
+
+  videoList: (classnum) => {
+    return fetch(CREATE_API + "stud/video/" + classnum, {
+      method: "get",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  },
 };
 export default studApi;
