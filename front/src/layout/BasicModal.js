@@ -19,7 +19,7 @@ const BasicModal = (props) => {
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Open Modal
+        {props.title}
       </Button>
       <Modal
         title="Basic Modal"

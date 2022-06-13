@@ -1,17 +1,54 @@
 const express = require("express");
 const router = express.Router();
-
 const profService = require("./prof.service");
+const multer = require("multer");
 
 router.post("/upload/video", async (req, res) => {
-  try {
-    console.log(req.body);
+  let path = req.query.path;
+  const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+      callback(null, `${path}`); //업로드 파일의 저장 위치를 설정
+    },
+    filename: (req, file, callback) => {
+      callback(null, `${file.originalname}`); // 파일이 저장될 때 이름 설정
+    },
+  });
 
-    // const result = await profService.videoUpload(req.body);
-  } catch (error) {
-    console.log(error);
-  }
+  const limits = {
+    files: 50,
+    fileSize: 1024 * 1024 * 1024, //1G
+  };
+
+  const upload = multer({ storage, limits }).any();
+
+  const reqFiles = [];
+
+  upload(req, res, (err) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+
+    for (let i = 0; i < req.files.length; i++) {
+      reqFiles.push(req.files[i].fileName);
+    }
+
+    return res.json({
+      success: true,
+      url: res.req.file.path,
+      fileName: reqFiles,
+    });
+  });
 });
+// router.post("/upload/video", async (req, res) => {
+//   try {
+
+//     const result = await profService.videoUpload(req.query.path);
+
+//     console.log(result);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 router.post("/class", async (req, res) => {
   try {

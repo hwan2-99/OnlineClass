@@ -1,6 +1,8 @@
 import React from "react";
 import classes from "./VideoMain.module.css";
 import { Link, Outlet, useParams } from "react-router-dom";
+import VideoUpload from "../form/VideoUploadForm";
+import BasicModal from "../../layout/BasicModal";
 
 const VideoMain = () => {
   const { classnum } = useParams();
@@ -13,6 +15,9 @@ const VideoMain = () => {
       <h3>강의 설명</h3>
       <hr />
       동영상 나불나불
+      <BasicModal title={"영상업로드"}>
+        <VideoUpload />
+      </BasicModal>
     </div>
   );
 };

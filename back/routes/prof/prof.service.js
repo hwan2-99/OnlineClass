@@ -1,8 +1,10 @@
 const pool = require("../../config/dbConfig");
+const multer = require("multer");
 
 module.exports = {
   videoUpload: async (videoInfo) => {
-    //로컬에 저장
+    //서버에 저장
+    console.log(videoInfo);
 
     //디비에 저장
     try {
