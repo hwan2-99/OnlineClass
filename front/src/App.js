@@ -23,8 +23,7 @@ function App() {
         <div className={classes["header"]}>
           <nav className={classes["nav-item"]}>
             <Link to={"/"}>home</Link>
-            <Link to={"prof"}>교수</Link>
-            <Link to={"stud"}>학생</Link>
+            <Link to={"stud"}>stud</Link>
           </nav>
         </div>
         <div className={classes.main}>

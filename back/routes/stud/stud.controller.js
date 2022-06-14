@@ -7,7 +7,6 @@ const studService = require("./stud.service");
 router.post("/register", async (req, res) => {
   try {
     const result = await studService.classRegister(req.body);
-    console.log(result);
     return res
       .status(200)
       .json({ status: 200, data: result, message: "강의 등록 성공" });
@@ -19,7 +18,6 @@ router.post("/register", async (req, res) => {
 router.post("/qa", async (req, res) => {
   try {
     const result = await studService.qaPost(req.body);
-    console.log(result);
     return res
       .status(200)
       .json({ status: 200, data: result, message: "qa 등록 성공" });
@@ -32,7 +30,6 @@ router.get("/class/:studnum", async (req, res) => {
   try {
     console.log(req.params);
     const result = await studService.getMyClassList(req.params.studnum);
-    console.log(result);
     return res
       .status(200)
       .json({ status: 200, data: result, message: "리스트 가져오기 성공" });
@@ -46,7 +43,6 @@ router.get("/faq/:tagnum", async (req, res) => {
   try {
     console.log(req.params);
     const result = await studService.getTagFaqList(req.params.tagnum);
-    console.log(result);
     return res
       .status(200)
       .json({ status: 200, data: result, message: "리스트 가져오기 성공" });
@@ -60,7 +56,6 @@ router.get("/video/tag/:num", async (req, res) => {
   try {
     console.log(req.params);
     const result = await studService.getVideoTagList(req.params.num);
-    console.log(result);
     return res
       .status(200)
       .json({ status: 200, data: result, message: "리스트 가져오기 성공" });
@@ -74,7 +69,6 @@ router.get("/video/list/:classnum", async (req, res) => {
   const { classnum } = req.params;
   try {
     const result = await studService.getClassVideoList(classnum);
-    console.log(result);
     return res
       .status(200)
       .json({ status: 200, data: result, message: "리스트 가져오기 성공" });

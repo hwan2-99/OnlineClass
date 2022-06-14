@@ -34,6 +34,7 @@ module.exports = {
         course_term,
         course_content,
       ]);
+      conn.release();
       return result;
     } catch (error) {
       return error;
@@ -46,7 +47,7 @@ module.exports = {
       const query = `Select * from course where prof_num = ?`;
 
       const [result] = await conn.query(query, [num]);
-
+      conn.release();
       return result;
     } catch (error) {
       console.log(error);
@@ -61,7 +62,7 @@ module.exports = {
       const query = `Select * from course`;
 
       const [result] = await conn.query(query);
-
+      conn.release();
       return result;
     } catch (error) {
       console.log(error);

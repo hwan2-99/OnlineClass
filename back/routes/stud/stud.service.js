@@ -19,6 +19,7 @@ module.exports = {
         course_num,
         prof_num,
       ]);
+      conn.release();
       return result;
     } catch (error) {
       return error;
@@ -51,6 +52,7 @@ module.exports = {
         qa_content,
         qa_reply_content,
       ]);
+      conn.release();
       return result;
     } catch (error) {
       return error;
@@ -69,7 +71,7 @@ module.exports = {
         where course_info.stud_num = ?`;
 
       const [result] = await conn.query(query, [num]);
-
+      conn.release();
       return result;
     } catch (error) {
       console.log(error);
@@ -86,7 +88,7 @@ module.exports = {
         where video.course_num = ?`;
 
       const [result] = await conn.query(query, [classNum]);
-
+      conn.release();
       return result;
     } catch (error) {
       console.log(error);
@@ -102,7 +104,7 @@ module.exports = {
         where video_num = ?`;
 
       const [result] = await conn.query(query, [num]);
-
+      conn.release();
       return result;
     } catch (error) {
       console.log(error);
@@ -118,7 +120,7 @@ module.exports = {
         where tag_num = ?`;
 
       const [result] = await conn.query(query, [num]);
-
+      conn.release();
       return result;
     } catch (error) {
       console.log(error);

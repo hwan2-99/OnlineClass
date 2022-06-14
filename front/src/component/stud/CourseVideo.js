@@ -8,24 +8,49 @@ import classes from "./CourseVideo.module.css";
 import FAQ from "./FAQ";
 import BasicModal from "../../layout/BasicModal";
 import studHandler from "../../lib/handler/studHandler";
+import QASend from "../form/QASend";
+import dateToUse from "../../lib/date";
 
 const CourseVideo = () => {
   const location = useLocation();
 
   const studNum = useSelector((state) => state.num);
   const [tagList, setTagList] = useState([]);
+  const [tag, setTag] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [qaList, setList] = useState([]);
 
   const { video_num, video_order, video_title, video_filename, video_length } =
     location.state;
+  let i = 0;
 
   useEffect(() => {
     const getVideoTag = async () => {
       const result = await studHandler.getVideoTagList(video_num);
-      console.log(result);
+      console.log("태그리스트", result);
       setTagList(result);
+      setTag(tagList[0]);
     };
     getVideoTag();
   }, [video_num]);
+
+  useEffect(() => {
+    //에러
+    try {
+      const loadList = async () => {
+        if (tagList.length > 0) {
+          //로딩중
+          setLoading(true);
+          const result = await studHandler.getTagFAQList(tag.tag_num);
+          setList(result);
+        }
+      };
+      loadList();
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [tagList, tag]);
 
   return (
     <div className={classes["wrapper"]}>
@@ -58,7 +83,48 @@ const CourseVideo = () => {
       <div className={classes["FAQ-wrapper"]}>
         <section>
           <h2>FAQ</h2>
-          <FAQ tag={tagList} videonum={video_num} />
+          {tagList.length > 0 && (
+            <>
+              {tagList.map((tag) => {
+                return (
+                  <div key={tag.tag_num}>
+                    <Button
+                      key={tag.tag_num}
+                      onClick={() => {
+                        setTag(tag);
+                      }}
+                    >
+                      {++i}
+                    </Button>
+                  </div>
+                );
+              })}
+            </>
+          )}
+          {tagList.length > 0 && (
+            <BasicModal title={"Q&A 보내기"}>
+              <h3>Q&A보내기</h3>
+              <hr />
+              <QASend info={{ tag: 1, std: studNum, vid: video_num }} />
+            </BasicModal>
+          )}
+          <div className={classes["qa-wrapper"]}>
+            <br />
+            {!loading && (
+              <>
+                {qaList.map((qa) => {
+                  return (
+                    <div key={qa.qa_num} className={classes.qa}>
+                      <p>Q : {qa.qa_title}</p>
+                      <p>내용 : {qa.qa_content}</p>
+                      <p>A : {qa.qa_reply_content}</p>
+                      <p>보낸 날짜 : {dateToUse(qa.qa_send_time)}</p>
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </div>
         </section>
       </div>
     </div>

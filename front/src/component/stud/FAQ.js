@@ -7,11 +7,10 @@ import studHandler from "../../lib/handler/studHandler";
 import QASend from "../form/QASend";
 
 const FAQ = (props) => {
-  const tagList = props.tag;
+  const tag = props.tag;
   const videonum = props.videonum;
   const studnum = useSelector((state) => state.num);
 
-  const [tagNum, setTag] = useState(0);
   const [loading, setLoading] = useState(false);
   const [qaList, setList] = useState([]);
 
@@ -21,7 +20,7 @@ const FAQ = (props) => {
       const loadList = async () => {
         //로딩중
         setLoading(true);
-        const result = await studHandler.getTagFAQList(tagNum);
+        const result = await studHandler.getTagFAQList(tag);
         setList(result);
       };
       loadList();
@@ -29,36 +28,16 @@ const FAQ = (props) => {
     } catch (error) {
       console.log(error);
     }
-  }, [tagNum]);
-
-  let i = 0;
+  }, [tag]);
 
   return (
     <div>
       <BasicModal title={"Q&A 보내기"}>
         <h3>Q&A보내기</h3>
         <hr />
-        <QASend info={{ tag: tagNum, std: studnum, vid: videonum }} />
+        <QASend info={{ tag: tag, std: studnum, vid: videonum }} />
       </BasicModal>
       <br />
-      {tagList.length > 0 && (
-        <>
-          {tagList.map((tag) => {
-            return (
-              <>
-                <Button
-                  key={tag.tag_num}
-                  onClick={(e) => {
-                    setTag(tag.tag_num);
-                  }}
-                >
-                  {++i}
-                </Button>
-              </>
-            );
-          })}
-        </>
-      )}
       {!loading && (
         <>
           {qaList.map((qa) => {

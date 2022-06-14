@@ -24,3 +24,17 @@
   background-color: rgb(252, 252, 252);
   box-shadow: 1px 1px 2px black;
 }
+
+.qa-wrapper {
+  overflow: scroll;
+  height: 400px;
+  width: auto;
+}
+
+.qa {
+  padding: 10px;
+  margin: 10px;
+  border: 1px black solid;
+  border-radius: 20px;
+  background-color: white;
+}
