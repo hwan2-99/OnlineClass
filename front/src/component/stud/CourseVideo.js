@@ -105,7 +105,9 @@ const CourseVideo = () => {
             <BasicModal title={"Q&A 보내기"}>
               <h3>Q&A보내기</h3>
               <hr />
-              <QASend info={{ tag: 1, std: studNum, vid: video_num }} />
+              <QASend
+                info={{ tag: tag.tag_num, std: studNum, vid: video_num }}
+              />
             </BasicModal>
           )}
           <div className={classes["qa-wrapper"]}>
