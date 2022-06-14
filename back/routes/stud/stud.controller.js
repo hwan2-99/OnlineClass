@@ -16,10 +16,50 @@ router.post("/register", async (req, res) => {
   }
 });
 
+router.post("/qa", async (req, res) => {
+  try {
+    const result = await studService.qaPost(req.body);
+    console.log(result);
+    return res
+      .status(200)
+      .json({ status: 200, data: result, message: "qa 등록 성공" });
+  } catch (error) {
+    return res.status(200).json({ status: 500, message: "오류 발생" });
+  }
+});
+
 router.get("/class/:studnum", async (req, res) => {
   try {
     console.log(req.params);
     const result = await studService.getMyClassList(req.params.studnum);
+    console.log(result);
+    return res
+      .status(200)
+      .json({ status: 200, data: result, message: "리스트 가져오기 성공" });
+  } catch (error) {
+    return res.status(200).json({ status: 500, message: "오류 발생" });
+  }
+});
+
+//태그 faq 리스트 가져오기
+router.get("/faq/:tagnum", async (req, res) => {
+  try {
+    console.log(req.params);
+    const result = await studService.getTagFaqList(req.params.tagnum);
+    console.log(result);
+    return res
+      .status(200)
+      .json({ status: 200, data: result, message: "리스트 가져오기 성공" });
+  } catch (error) {
+    return res.status(200).json({ status: 500, message: "오류 발생" });
+  }
+});
+
+//비디오 태그 리스트 가져오기
+router.get("/video/tag/:num", async (req, res) => {
+  try {
+    console.log(req.params);
+    const result = await studService.getVideoTagList(req.params.num);
     console.log(result);
     return res
       .status(200)

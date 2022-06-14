@@ -46,6 +46,50 @@ const studHandler = {
       return false;
     }
   },
+
+  getVideoTagList: async (num) => {
+    try {
+      let apiResult = await studApi.getVideoTag(num);
+      const listResult = await apiResult.json();
+
+      if (listResult.status === SUCCESS) {
+        return listResult.data;
+      }
+    } catch (error) {
+      console.log("getlist Fail");
+      return false;
+    }
+  },
+
+  getTagFAQList: async (tagnum) => {
+    try {
+      let apiResult = await studApi.getTagFAQ(tagnum);
+      const listResult = await apiResult.json();
+
+      if (listResult.status === SUCCESS) {
+        return listResult.data;
+      }
+    } catch (error) {
+      console.log("getlist Fail");
+      return false;
+    }
+  },
+
+  postQAStud: async (info) => {
+    try {
+      let apiResult = await studApi.postQA(info);
+
+      const result = apiResult;
+
+      if (result.status === SUCCESS) {
+        return result;
+      }
+    } catch (error) {
+      console.log("qa add Fail");
+
+      return false;
+    }
+  },
 };
 
 export default studHandler;

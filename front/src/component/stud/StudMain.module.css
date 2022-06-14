@@ -1,0 +1,24 @@
+.main-wrapper {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 100%;
+}
+
+.video-list-wrapper {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: auto;
+}
+
+.video-list {
+  text-align: center;
+  background-color: rgb(136, 180, 238);
+  color: rgb(255, 255, 255);
+  margin: 10px;
+  width: 300px;
+  padding: 10px;
+  height: 200px;
+  border-radius: 20px;
+  font-size: 13px;
+}

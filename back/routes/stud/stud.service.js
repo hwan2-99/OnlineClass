@@ -25,6 +25,38 @@ module.exports = {
     }
   },
 
+  qaPost: async (info) => {
+    console.log(info);
+    try {
+      const conn = await pool.getConnection();
+
+      const {
+        tagnum,
+        videonum,
+        studnum,
+        qa_title,
+        qa_content,
+        qa_reply_content,
+      } = info;
+
+      const query = `Insert into question (
+        tag_num,video_num, stud_num, qa_send_time, qa_title, qa_content,qa_reply_content
+      ) values (?,?,?,NOW(),?,?,?)`;
+
+      const [{ affectedRows: result }] = await conn.query(query, [
+        tagnum,
+        videonum,
+        studnum,
+        qa_title,
+        qa_content,
+        qa_reply_content,
+      ]);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  },
+
   getMyClassList: async (num) => {
     try {
       const conn = await pool.getConnection();
@@ -54,6 +86,38 @@ module.exports = {
         where video.course_num = ?`;
 
       const [result] = await conn.query(query, [classNum]);
+
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
+  getVideoTagList: async (num) => {
+    try {
+      const conn = await pool.getConnection();
+
+      const query = `select * from video_tag
+        where video_num = ?`;
+
+      const [result] = await conn.query(query, [num]);
+
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
+  getTagFaqList: async (num) => {
+    try {
+      const conn = await pool.getConnection();
+
+      const query = `select * from question
+        where tag_num = ?`;
+
+      const [result] = await conn.query(query, [num]);
 
       return result;
     } catch (error) {

@@ -3,21 +3,23 @@ import { Link, Outlet } from "react-router-dom";
 import MyCourse from "../component/stud/MyCourse";
 import RegisterCourse from "../component/stud/RegisterCourse";
 import RegisterModal from "../component/stud/RegisterModal";
+import classes from "./stylesheet/Student.module.css";
 
 const Student = () => {
   return (
     <>
-      <div>
-        <div>로고</div>
-        <div>
-          내가 듣는 강좌 목록
+      <h3>강의실</h3>
+      <RegisterModal>
+        <RegisterCourse />
+      </RegisterModal>
+      <hr />
+      <div className={classes.wrapper}>
+        <section className={classes["list-wrapper"]}>
           <MyCourse />
-        </div>
-        <Outlet />
-        <p>강의 등록 버튼을 만들어서 렌더링을 막도록 하자</p>
-        <RegisterModal>
-          <RegisterCourse />
-        </RegisterModal>
+        </section>
+        <section className={classes["course-wrapper"]}>
+          <Outlet />
+        </section>
       </div>
     </>
   );

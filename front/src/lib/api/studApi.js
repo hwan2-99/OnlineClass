@@ -28,5 +28,33 @@ const studApi = {
       },
     });
   },
+
+  getVideoTag: (num) => {
+    return fetch(CREATE_API + "stud/video/tag/" + num, {
+      method: "get",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  },
+
+  getTagFAQ: (tagNum) => {
+    return fetch(CREATE_API + "stud/faq/" + tagNum, {
+      method: "get",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  },
+
+  postQA: (info) => {
+    return fetch(CREATE_API + "stud/qa", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(info),
+    });
+  },
 };
 export default studApi;
