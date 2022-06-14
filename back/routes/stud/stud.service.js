@@ -44,4 +44,21 @@ module.exports = {
       return error;
     }
   },
+
+  getClassVideoList: async (classNum) => {
+    try {
+      const conn = await pool.getConnection();
+
+      const query = `select * from course 
+        inner join video on video.course_num = course.course_num
+        where video.course_num = ?`;
+
+      const [result] = await conn.query(query, [classNum]);
+
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
 };

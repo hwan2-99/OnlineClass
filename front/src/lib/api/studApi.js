@@ -21,7 +21,7 @@ const studApi = {
   },
 
   videoList: (classnum) => {
-    return fetch(CREATE_API + "stud/video/" + classnum, {
+    return fetch(CREATE_API + "stud/video/list/" + classnum, {
       method: "get",
       headers: {
         "Content-type": "application/json",

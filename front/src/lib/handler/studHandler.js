@@ -32,6 +32,20 @@ const studHandler = {
       return false;
     }
   },
+
+  getClassVideoList: async (num) => {
+    try {
+      let apiResult = await studApi.videoList(num);
+      const listResult = await apiResult.json();
+
+      if (listResult.status === SUCCESS) {
+        return listResult.data;
+      }
+    } catch (error) {
+      console.log("getlist Fail");
+      return false;
+    }
+  },
 };
 
 export default studHandler;
