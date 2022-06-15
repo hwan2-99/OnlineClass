@@ -101,13 +101,11 @@ const CourseVideo = () => {
               })}
             </>
           )}
-          {tagList.length > 0 && (
+          {!loading && (
             <BasicModal title={"Q&A 보내기"}>
               <h3>Q&A보내기</h3>
               <hr />
-              <QASend
-                info={{ tag: tag.tag_num, std: studNum, vid: video_num }}
-              />
+              <QASend info={{ tag: 2, std: studNum, vid: video_num }} />
             </BasicModal>
           )}
           <div className={classes["qa-wrapper"]}>

@@ -39,7 +39,7 @@ const ClassList = () => {
           return (
             <div key={course.course_num}>
               <p>{course.course_name}</p>
-              <Link to={`class:${course.course_num}`}>강좌 이동</Link>
+              <Link to={`class/${course.course_num}`}>강좌 이동</Link>
               <hr />
             </div>
           );
