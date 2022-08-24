@@ -24,10 +24,11 @@
 
 **백엔드**
 
+
 - Node.js , Mysql
 
 **상세 업무 및 성과**
-![시스템 구성도](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4a009842-380f-47fd-85bc-d8c3c0c42d1c/Untitled.png)
+![시스템 구성도](https://user-images.githubusercontent.com/40158148/186416046-568926f5-00dc-43e4-8e62-e96702b9b5fb.png)
 
 - 상태 관리 라이브러리로 Redux 사용
 - 졸업 작품으로 풀스택으로 개발 진행
