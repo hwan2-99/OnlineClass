@@ -69,4 +69,19 @@ module.exports = {
       return error;
     }
   },
+
+  getMyVideoInfo: async (num) => {
+    try {
+      const conn = await pool.getConnection();
+
+      const query = `Select * from video where course_num=${num}`;
+
+      const [result] = await conn.query(query);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
 };

@@ -10,6 +10,7 @@ const prof = {
       body: JSON.stringify(Info),
     });
   },
+
   getMyClassList: (num) => {
     return fetch(`${CREATE_API}prof/classlist/${num}`, {
       method: "get",
@@ -18,8 +19,18 @@ const prof = {
       },
     });
   },
+
   getAllClassList: () => {
     return fetch(CREATE_API + "prof/classlist", {
+      method: "get",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  },
+
+  getClassVideoList: (classnum) => {
+    return fetch(CREATE_API + "prof/video/list/" + classnum, {
       method: "get",
       headers: {
         "Content-type": "application/json",

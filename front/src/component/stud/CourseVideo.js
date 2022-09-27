@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
@@ -19,6 +19,24 @@ const CourseVideo = () => {
   const [tag, setTag] = useState({});
   const [loading, setLoading] = useState(false);
   const [qaList, setList] = useState([]);
+  const videoRef = useRef();
+
+  const pauseHandler = () => {
+    console.log("영상이 정지 됨");
+    const time = 12000;
+
+    if (time < tag.end) {
+      setTag(tagList[0]);
+    } else {
+      setTag(tagList[1]);
+    }
+
+    console.log(videoRef.current.getCurrentTime());
+  };
+
+  const onProgressHandler = (state) => {
+    console.log(state);
+  };
 
   const { video_num, video_order, video_title, video_filename, video_length } =
     location.state;
@@ -67,6 +85,7 @@ const CourseVideo = () => {
           <hr />
           <ReactPlayer
             width="inherit"
+            ref={videoRef}
             height="400px"
             url={`http://localhost:5000/stud/video/${video_filename}`}
             playing={false}
@@ -74,6 +93,8 @@ const CourseVideo = () => {
             poster={"../../asset/asset/play"}
             light={true}
             pip={false}
+            onPause={pauseHandler}
+            onProgress={onProgressHandler}
           />
           <>
             <Progress percent={60} steps={30} />
@@ -83,24 +104,6 @@ const CourseVideo = () => {
       <div className={classes["FAQ-wrapper"]}>
         <section>
           <h2>FAQ</h2>
-          {tagList.length > 0 && (
-            <>
-              {tagList.map((tag) => {
-                return (
-                  <div key={tag.tag_num}>
-                    <Button
-                      key={tag.tag_num}
-                      onClick={() => {
-                        setTag(tag);
-                      }}
-                    >
-                      {++i}
-                    </Button>
-                  </div>
-                );
-              })}
-            </>
-          )}
           {!loading && (
             <BasicModal title={"Q&A 보내기"}>
               <h3>Q&A보내기</h3>

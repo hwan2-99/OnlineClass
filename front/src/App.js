@@ -24,6 +24,7 @@ function App() {
           <nav className={classes["nav-item"]}>
             <Link to={"/"}>home</Link>
             <Link to={"stud"}>stud</Link>
+            <Link to={"prof"}>prof</Link>
           </nav>
         </div>
         <div className={classes.main}>

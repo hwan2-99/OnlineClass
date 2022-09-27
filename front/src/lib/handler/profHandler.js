@@ -46,6 +46,20 @@ const profHandler = {
       console.log(error);
     }
   },
+
+  getMyVideoList: async (classnum) => {
+    try {
+      let apiResult = await prof.getClassVideoList(classnum);
+      const result = await apiResult.json();
+      console.log(result);
+
+      if (result.status === 200) {
+        return result.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default profHandler;
