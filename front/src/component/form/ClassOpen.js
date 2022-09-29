@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Button, Form, Input } from "antd";
 import profHandler from "../../lib/handler/profHandler";
-import { Link } from "react-router-dom";
 
 const ClassOpen = () => {
   const curNum = useSelector((state) => state.num);

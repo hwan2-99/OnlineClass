@@ -1,16 +1,16 @@
-import { Routes, Route, Link, Outlet } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import Home from "./page/Home";
 import Login from "./page/Login";
 import Student from "./page/Student";
 import Profesor from "./page/Profesor";
 import VideoMain from "./component/prof/VideoMain";
-import VideoQA from "./component/prof/VideoQA";
 import NotFound from "./page/NotFound";
 import "antd/dist/antd.css";
 import SignUp from "./page/SignUp";
 import classes from "./app.module.css";
 import ClassOpen from "./component/form/ClassOpen";
-import CourseMain from "./component/stud/CourseMain";
+import StudMain from "./component/stud/StudMain";
+import CourseMainVideo from "./component/stud/CourseMainVideo";
 
 function App() {
   return (
@@ -23,8 +23,8 @@ function App() {
         <div className={classes["header"]}>
           <nav className={classes["nav-item"]}>
             <Link to={"/"}>home</Link>
-            <Link to={"prof"}>교수</Link>
-            <Link to={"stud"}>학생</Link>
+            <Link to={"stud"}>stud</Link>
+            <Link to={"prof"}>prof</Link>
           </nav>
         </div>
         <div className={classes.main}>
@@ -33,11 +33,13 @@ function App() {
             <Route path="log" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="prof" element={<Profesor />}>
-              <Route path="class:classnum" element={<VideoMain />} />
+              <Route path="class/:classnum" element={<VideoMain />} />
               <Route path="open" element={<ClassOpen />} />
             </Route>
-            <Route path="stud" element={<Student />} >
-              <Route path="class:classnum" element={<CourseMain/>}/>
+            <Route path="stud" element={<Student />}>
+              <Route path="class/:classnum" element={<StudMain />}>
+                <Route path=":videonum" element={<CourseMainVideo />} />
+              </Route>
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

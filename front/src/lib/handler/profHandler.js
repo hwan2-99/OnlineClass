@@ -23,6 +23,7 @@ const profHandler = {
     try {
       let apiResult = await prof.getMyClassList(num);
       const result = await apiResult.json();
+      console.log(result);
 
       if (result.status === 200) {
         return result.data;
@@ -32,7 +33,33 @@ const profHandler = {
     }
   },
 
-  logout: () => {},
+  getRegisterableClass: async () => {
+    try {
+      let apiResult = await prof.getAllClassList();
+      const result = await apiResult.json();
+      console.log(result);
+
+      if (result.status === 200) {
+        return result.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getMyVideoList: async (classnum) => {
+    try {
+      let apiResult = await prof.getClassVideoList(classnum);
+      const result = await apiResult.json();
+      console.log(result);
+
+      if (result.status === 200) {
+        return result.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default profHandler;

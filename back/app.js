@@ -11,6 +11,7 @@ const upload = multer({ dest: "uploads/" });
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/user/index");
 const profRouter = require("./routes/prof/index");
+const studRouter = require("./routes/stud/index");
 
 var app = express();
 
@@ -18,8 +19,8 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(logger("dev"));
 app.use(cors());
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -29,9 +30,17 @@ app.use("/uploads", express.static("uploads"));
 app.use("/", indexRouter);
 app.use("/user", usersRouter);
 app.use("/prof", profRouter);
+app.use("/stud", studRouter);
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+  next();
+});
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+https: app.use(function (req, res, next) {
   next(createError(404));
 });
 

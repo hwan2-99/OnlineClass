@@ -16,6 +16,8 @@ const dbInfo = {
   user: "root",
   password: "1111",
   database: "onlineclass",
+  connectTimeout: 5000,
+  connectionLimit: 30, //default 10
 };
 
 const pool = createPool(dbInfo);

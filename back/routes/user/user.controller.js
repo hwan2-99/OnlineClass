@@ -8,6 +8,7 @@ const UserService = require("./user.service");
 router.post("/login", async (req, res) => {
   try {
     const result = await UserService.loginUser(req.body);
+    result.isProf = req.body.isProf;
     console.log("db결과", result);
 
     if (Object.keys(result).length > 0) {

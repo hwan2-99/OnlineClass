@@ -35,19 +35,14 @@ module.exports = {
       const conn = await pool.getConnection();
 
       const { username, password, isProf = false } = loginInfo;
+      console.log(loginInfo);
       const query =
         isProf === true
           ? `Select * from professor where prof_email = ? and password = ?`
           : `Select * from student where stud_email = ? and stud_password = ?`;
 
-      // const [{ affectedRows: result }] = await conn.query(query, [
-      //   username,
-      //   password,
-      // ]);
-
       const [[result]] = await conn.query(query, [username, password]);
 
-      result.isProf = isProf;
       return result;
     } catch (error) {
       return error;
