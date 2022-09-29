@@ -61,7 +61,19 @@ router.post("/class", async (req, res) => {
   }
 });
 
-router.get("/classlist", async (req, res) => {
+router.get("/class/:classnum", async (req, res) => {
+  try {
+    const { classnum } = req.params;
+    const result = await profService.getClassInfo(classnum);
+    return res
+      .status(200)
+      .json({ status: 200, data: result, message: "강의 정보 불러오기 성공" });
+  } catch (error) {
+    return res.status(200).json({ status: 500, message: "오류 발생" });
+  }
+});
+
+router.get("/class/list", async (req, res) => {
   try {
     console.log(req.params);
     const result = await profService.getAllClassList();
@@ -87,7 +99,7 @@ router.get("/video/list/:classnum", async (req, res) => {
   }
 });
 
-router.get("/classlist/:profnum", async (req, res) => {
+router.get("/class/list/:profnum", async (req, res) => {
   try {
     console.log(req.params);
     const result = await profService.getProfClassList(req.params.profnum);

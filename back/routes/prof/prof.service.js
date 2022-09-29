@@ -40,6 +40,22 @@ module.exports = {
       return error;
     }
   },
+
+  getClassInfo: async (num) => {
+    try {
+      const conn = await pool.getConnection();
+
+      const query = `Select * from course where course_num = ?`;
+
+      const [result] = await conn.query(query, [num]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
   getProfClassList: async (num) => {
     try {
       const conn = await pool.getConnection();

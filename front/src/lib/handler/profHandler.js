@@ -19,6 +19,19 @@ const profHandler = {
     }
   },
 
+  getClassInfo: async (classnum) => {
+    try {
+      let apiResult = await prof.getMyClassInfo(classnum);
+      const result = await apiResult.json();
+
+      if (result.status === 200) {
+        return result.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   getClassList: async (num) => {
     try {
       let apiResult = await prof.getMyClassList(num);
