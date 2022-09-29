@@ -10,7 +10,7 @@ import "antd/dist/antd.css";
 import SignUp from "./page/SignUp";
 import classes from "./app.module.css";
 import ClassOpen from "./component/form/ClassOpen";
-import Course from "./component/stud/Course";
+import CourseMain from "./component/stud/CourseMain";
 
 function App() {
   return (
@@ -37,7 +37,7 @@ function App() {
               <Route path="open" element={<ClassOpen />} />
             </Route>
             <Route path="stud" element={<Student />} >
-              <Route path="class:classnum" element={<Course/>}/>
+              <Route path="class:classnum" element={<CourseMain/>}/>
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

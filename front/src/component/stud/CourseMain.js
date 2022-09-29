@@ -1,4 +1,4 @@
-const Course = ()=> {
+const CourseMain = ()=> {
 
     return (
         <>
@@ -16,4 +16,4 @@ const Course = ()=> {
     );
 }
 
-export default Course;
+export default CourseMain;
