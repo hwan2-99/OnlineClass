@@ -10,7 +10,7 @@ import SignUp from "./page/SignUp";
 import classes from "./app.module.css";
 import ClassOpen from "./component/form/ClassOpen";
 import StudMain from "./component/stud/StudMain";
-import CourseMainVideo from "./component/stud/CourseMainVideo";
+import CourseVideo from "./component/stud/CourseVideo";
 
 function App() {
   return (
@@ -38,7 +38,7 @@ function App() {
             </Route>
             <Route path="stud" element={<Student />}>
               <Route path="class/:classnum" element={<StudMain />}>
-                <Route path=":videonum" element={<CourseMainVideo />} />
+                <Route path=":videonum" element={<CourseVideo />} />
               </Route>
             </Route>
             <Route path="*" element={<NotFound />} />
