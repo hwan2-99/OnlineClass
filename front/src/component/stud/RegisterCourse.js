@@ -15,6 +15,7 @@ const RegisterCourse = () => {
       };
       fetchingList();
       setLoading(false);
+      console.log(courseList);
     } catch (error) {
       console.log(error);
     }

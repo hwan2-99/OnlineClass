@@ -22,7 +22,7 @@ const BasicModal = (props) => {
         {props.title}
       </Button>
       <Modal
-        title="Basic Modal"
+        title={props.title}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
