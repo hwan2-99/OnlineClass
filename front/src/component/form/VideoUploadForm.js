@@ -1,28 +1,35 @@
-import React from "react";
-import { Button, Form, Input, InputNumber } from "antd";
+import React, { useRef, useState } from "react";
+import { Button, Form, Input, InputNumber, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Dropzone from "react-dropzone";
 import profHandler from "../../lib/handler/profHandler";
 
-const onDrop = (files) => {
-  console.log("Dropped files", files);
-  let formData = new FormData();
-  formData.append("path", "class");
-  formData.append("file", files[0]);
-  console.log(formData);
-  profHandler.postVideo(formData);
-};
+let msg = "";
 
 const VideoUpload = () => {
   const [form] = Form.useForm();
+  const [isUploaded, setUpload] = useState(false);
+  const [fileName, setFileName] = useState("");
 
-  const video_filename = Form.useWatch("video_filename", form);
-  const video_title = Form.useWatch("video_title", form);
-  const video_order = Form.useWatch("video_order", form);
-  const video_length = Form.useWatch("video_length", form);
+  const onDrop = async (files) => {
+    console.log("Dropped files", files);
+    let formData = new FormData();
+    formData.append("file", files[0]);
 
-  const onSubmitHandler = (e) => {
-    console.log(video_filename, video_title, video_order, video_length);
+    const result = await profHandler.postVideo(formData);
+    console.log(result);
+    if (result.success) {
+      setUpload(true);
+      setFileName(result.fileName);
+      msg = `파일명 : ${result.fileName}
+       영상 길이 : ${20000} `;
+      return;
+    }
+  };
+
+  const onSubmitHandler = (values) => {
+    console.log(values);
+    console.log(fileName);
   };
 
   return (
@@ -31,31 +38,41 @@ const VideoUpload = () => {
       <hr />
       <p>업로드 시 필요한 데이터 정리하기</p>
       <Form form={form} onFinish={onSubmitHandler}>
-        <Dropzone
-          onDrop={onDrop}
-          multiple={false} //한번에 올리는 파일 갯수
-          maxSize={100000000}
-        >
-          {({ getRootProps, getInputProps }) => (
-            <div
-              style={{
-                width: "300px",
-                height: "240px",
-                border: "1px solid lightray",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              {...getRootProps()}
-            >
-              <Input {...getInputProps()} />
-              <UploadOutlined type="plus" style={{ fontSize: "3rem" }} />
-            </div>
-          )}
-        </Dropzone>
-        <Form.Item name="video_filename" label="강의 파일명">
-          <Input />
-        </Form.Item>
+        {!isUploaded ? (
+          <Dropzone
+            onDrop={onDrop}
+            multiple={false} //한번에 올리는 파일 갯수
+            maxSize={100000000}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <div
+                style={{
+                  width: "300px",
+                  height: "240px",
+                  border: "1px solid lightray",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                {...getRootProps()}
+              >
+                <Input {...getInputProps()} />
+                <UploadOutlined type="plus" style={{ fontSize: "3rem" }} />
+              </div>
+            )}
+          </Dropzone>
+        ) : (
+          <>
+            <br />
+            <Alert
+              message={msg}
+              s
+              description={"업로드 성공 !"}
+              type="success"
+            />
+            <br />
+          </>
+        )}
         <Form.Item name="video_title" label="강의명">
           <Input />
         </Form.Item>
