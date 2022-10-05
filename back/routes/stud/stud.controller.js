@@ -39,10 +39,10 @@ router.get("/class/:studnum", async (req, res) => {
 });
 
 //태그 faq 리스트 가져오기
-router.get("/faq/:tagnum", async (req, res) => {
+router.get("/faq/:secnum", async (req, res) => {
   try {
     console.log(req.params);
-    const result = await studService.getTagFaqList(req.params.tagnum);
+    const result = await studService.getSectionFaqList(req.params.secnum);
     return res
       .status(200)
       .json({ status: 200, data: result, message: "리스트 가져오기 성공" });
@@ -52,10 +52,10 @@ router.get("/faq/:tagnum", async (req, res) => {
 });
 
 //비디오 태그 리스트 가져오기
-router.get("/video/tag/:num", async (req, res) => {
+router.get("/video/section/:num", async (req, res) => {
   try {
     console.log(req.params);
-    const result = await studService.getVideoTagList(req.params.num);
+    const result = await studService.getVideoSectionList(req.params.num);
     return res
       .status(200)
       .json({ status: 200, data: result, message: "리스트 가져오기 성공" });

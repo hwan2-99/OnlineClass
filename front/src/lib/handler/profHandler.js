@@ -78,10 +78,9 @@ const profHandler = {
     try {
       let apiResult = await prof.postVideoInClass(data);
       const result = await apiResult.json();
-      console.log(result);
 
-      if (result.status === 200) {
-        return result.data;
+      if (result.status === SUCCESS) {
+        return result;
       }
     } catch (error) {
       console.log(error);

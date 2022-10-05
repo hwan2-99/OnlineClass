@@ -30,7 +30,7 @@ const studApi = {
   },
 
   getVideoTag: (num) => {
-    return fetch(CREATE_API + "stud/video/tag/" + num, {
+    return fetch(CREATE_API + "stud/video/section/" + num, {
       method: "get",
       headers: {
         "Content-type": "application/json",
@@ -38,8 +38,8 @@ const studApi = {
     });
   },
 
-  getTagFAQ: (tagNum) => {
-    return fetch(CREATE_API + "stud/faq/" + tagNum, {
+  getTagFAQ: (secnum) => {
+    return fetch(CREATE_API + "stud/faq/" + secnum, {
       method: "get",
       headers: {
         "Content-type": "application/json",

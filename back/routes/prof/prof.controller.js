@@ -90,13 +90,15 @@ router.post("/upload/video", async (req, res) => {
     }
 
     for (let i = 0; i < req.files.length; i++) {
-      reqFiles.push(req.files[i].fileName);
+      reqFiles.push(req.files[i].filename);
     }
+
+    console.log(reqFiles);
 
     return res.json({
       success: true,
-      // url: req.file.path,
-      // fileName: reqFiles,
+      status: 200,
+      fileName: reqFiles[0],
     });
   });
 });

@@ -32,7 +32,7 @@ module.exports = {
       const conn = await pool.getConnection();
 
       const {
-        tagnum,
+        secnum,
         videonum,
         studnum,
         qa_title,
@@ -41,11 +41,11 @@ module.exports = {
       } = info;
 
       const query = `Insert into question (
-        tag_num,video_num, stud_num, qa_send_time, qa_title, qa_content,qa_reply_content
+        sec_num,video_num, stud_num, qa_send_time, qa_title, qa_content,qa_reply_content
       ) values (?,?,?,NOW(),?,?,?)`;
 
       const [{ affectedRows: result }] = await conn.query(query, [
-        tagnum,
+        secnum,
         videonum,
         studnum,
         qa_title,
@@ -96,11 +96,11 @@ module.exports = {
     }
   },
 
-  getVideoTagList: async (num) => {
+  getVideoSectionList: async (num) => {
     try {
       const conn = await pool.getConnection();
 
-      const query = `select * from video_tag
+      const query = `select * from video_section
         where video_num = ?`;
 
       const [result] = await conn.query(query, [num]);
@@ -112,12 +112,12 @@ module.exports = {
     }
   },
 
-  getTagFaqList: async (num) => {
+  getSectionFaqList: async (num) => {
     try {
       const conn = await pool.getConnection();
 
       const query = `select * from question
-        where tag_num = ?`;
+        where sec_num = ?`;
 
       const [result] = await conn.query(query, [num]);
       conn.release();
