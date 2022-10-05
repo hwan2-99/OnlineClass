@@ -2,9 +2,15 @@ import React from "react";
 import { Button, Form, Input, InputNumber } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Dropzone from "react-dropzone";
+import profHandler from "../../lib/handler/profHandler";
 
-const onDrop = (e) => {
-  console.log("Dropped files", e.dataTransfer.files);
+const onDrop = (files) => {
+  console.log("Dropped files", files);
+  let formData = new FormData();
+  formData.append("path", "class");
+  formData.append("file", files[0]);
+  console.log(formData);
+  profHandler.postVideo(formData);
 };
 
 const VideoUpload = () => {
@@ -50,7 +56,7 @@ const VideoUpload = () => {
         <Form.Item name="video_filename" label="강의 파일명">
           <Input />
         </Form.Item>
-        <Form.Item name="video_title " label="강의명">
+        <Form.Item name="video_title" label="강의명">
           <Input />
         </Form.Item>
         <Form.Item name="video_order" label="강의 순서">

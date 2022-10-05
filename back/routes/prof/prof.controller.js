@@ -65,18 +65,17 @@ router.get("/class/list/:profnum", async (req, res) => {
 });
 
 router.post("/upload/video", async (req, res) => {
-  let path = req.query.path;
   const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-      callback(null, `${path}`); //업로드 파일의 저장 위치를 설정
+      callback(null, `uploads/`); //업로드 파일의 저장 위치를 설정
     },
     filename: (req, file, callback) => {
-      callback(null, `${file.originalname}`); // 파일이 저장될 때 이름 설정
+      callback(null, `${Date.now()}_${file.originalname}`); // 파일이 저장될 때 이름 설정
     },
   });
 
   const limits = {
-    files: 50,
+    files: 1,
     fileSize: 1024 * 1024 * 1024, //1G
   };
 
@@ -86,6 +85,7 @@ router.post("/upload/video", async (req, res) => {
 
   upload(req, res, (err) => {
     if (err) {
+      console.log(err);
       return res.json({ success: false, err });
     }
 
@@ -95,8 +95,8 @@ router.post("/upload/video", async (req, res) => {
 
     return res.json({
       success: true,
-      url: res.req.file.path,
-      fileName: reqFiles,
+      // url: req.file.path,
+      // fileName: reqFiles,
     });
   });
 });

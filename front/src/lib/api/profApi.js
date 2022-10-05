@@ -46,6 +46,17 @@ const prof = {
       },
     });
   },
+
+  postVideoInClass: (video) => {
+    return fetch(CREATE_API + "prof/upload/video", {
+      method: "post",
+      // headers: {
+      //   "Content-type": "multipart/form-data",
+      // },
+      //video == form data 형식
+      body: video,
+    });
+  },
 };
 
 export default prof;
