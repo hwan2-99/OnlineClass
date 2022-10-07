@@ -57,6 +57,16 @@ const prof = {
       body: video,
     });
   },
+
+  postVideoInfo: function (info) {
+    return fetch(CREATE_API + "prof/upload/info", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(info),
+    });
+  },
 };
 
 export default prof;

@@ -14,6 +14,10 @@ module.exports = {
     }
   },
 
+  insertVideoInfo: async (videoInfo) => {
+    return true;
+  },
+
   insertClass: async (classInfo) => {
     console.log(classInfo);
     //디비

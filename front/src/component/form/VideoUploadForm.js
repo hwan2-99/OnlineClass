@@ -3,10 +3,11 @@ import { Button, Form, Input, InputNumber, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Dropzone from "react-dropzone";
 import profHandler from "../../lib/handler/profHandler";
+import prof from "../../lib/api/profApi";
 
 let msg = "";
 
-const VideoUpload = () => {
+const VideoUpload = (props) => {
   const [form] = Form.useForm();
   const [isUploaded, setUpload] = useState(false);
   const [fileName, setFileName] = useState("");
@@ -26,9 +27,14 @@ const VideoUpload = () => {
     }
   };
 
-  const onSubmitHandler = (values) => {
-    console.log(values);
-    console.log(fileName);
+  const onSubmitHandler = async (values) => {
+    const result = await profHandler.postVideoInfo({
+      course_num: props.classnum,
+      profnum: props.profnum,
+      fileName: fileName,
+      ...values,
+    });
+    console.log(result);
   };
 
   return (

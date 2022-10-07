@@ -35,7 +35,7 @@ const VideoMain = () => {
       <hr />
       <h5>{classInfo.course_content}</h5>
       <BasicModal title={"영상업로드"}>
-        <VideoUpload />
+        <VideoUpload classnum={classnum} profnum={classInfo.prof_num} />
       </BasicModal>
       <hr />
       동영상 나불나불
