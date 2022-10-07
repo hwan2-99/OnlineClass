@@ -65,14 +65,16 @@ router.get("/class/list/:profnum", async (req, res) => {
 });
 
 router.post("/video/info", async (req, res) => {
+  console.log(req.body);
   try {
-    const { body } = req.body;
+    const { body } = req;
     console.log(body);
     const result = await profService.insertVideoInfo(req.body);
     return res
       .status(200)
       .json({ status: 200, data: result, message: "강의정보 입력 성공!" });
   } catch (error) {
+    console.log("비디오 업로드 에러 : ", error);
     return res.status(200).json({ status: 500, message: "오류 발생" });
   }
 });
@@ -80,7 +82,7 @@ router.post("/video/info", async (req, res) => {
 router.post("/upload/video", async (req, res) => {
   const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-      callback(null, `uploads/`); //업로드 파일의 저장 위치를 설정
+      callback(null, `uploads/video/`); //업로드 파일의 저장 위치를 설정
     },
     filename: (req, file, callback) => {
       callback(null, `${Date.now()}_${file.originalname}`); // 파일이 저장될 때 이름 설정

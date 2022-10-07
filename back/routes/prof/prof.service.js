@@ -15,7 +15,28 @@ module.exports = {
   },
 
   insertVideoInfo: async (videoInfo) => {
-    return true;
+    try {
+      const conn = await pool.getConnection();
+
+      const { course_num, profnum, fileName, video_title, video_order } =
+        videoInfo;
+
+      const query = `Insert into video (
+        course_num, prof_num, video_filename, video_upload_date, video_title, video_order
+      ) values (?,?,?,NOW(),?,?)`;
+
+      const [{ affectedRows: result }] = await conn.query(query, [
+        course_num,
+        profnum,
+        fileName,
+        video_title,
+        video_order,
+      ]);
+      conn.release();
+      return result;
+    } catch (error) {
+      return error;
+    }
   },
 
   insertClass: async (classInfo) => {

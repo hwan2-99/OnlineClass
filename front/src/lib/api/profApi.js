@@ -59,7 +59,7 @@ const prof = {
   },
 
   postVideoInfo: function (info) {
-    return fetch(CREATE_API + "prof/upload/info", {
+    return fetch(CREATE_API + "prof/video/info", {
       method: "post",
       headers: {
         "Content-type": "application/json",

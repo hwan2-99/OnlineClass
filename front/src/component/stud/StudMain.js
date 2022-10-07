@@ -62,6 +62,7 @@ const StudMain = () => {
                     <Button
                       onClick={(e) => {
                         navigater(`${video.video_num}`, { state: video });
+                        console.log(video);
                       }}
                     >
                       강의 시청하기
