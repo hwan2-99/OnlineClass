@@ -88,7 +88,8 @@ const CourseVideo = () => {
             ref={videoRef}
             height="400px"
             url={`http://localhost:5000/stud/video/${video_filename}`}
-            playing={false}
+            playing={true}
+            muted={true}
             controls={true}
             poster={"../../asset/asset/play"}
             light={true}

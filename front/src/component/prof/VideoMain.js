@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from "./VideoMain.module.css";
 import { useParams } from "react-router-dom";
 import VideoUpload from "../form/VideoUploadForm";
+import Video from "./Video";
 import BasicModal from "../../layout/BasicModal";
 import profHandler from "../../lib/handler/profHandler";
 
@@ -38,8 +39,21 @@ const VideoMain = () => {
         <VideoUpload classnum={classnum} profnum={classInfo.prof_num} />
       </BasicModal>
       <hr />
-      동영상 나불나불
-      <h1> 동영상 관리 컴포넌트 마크업 구상 하기</h1>
+      {video_list.length === 0 ? (
+        <h1>강의 영상이 없습니다. 업로드 해주세요.</h1>
+      ) : (
+        video_list.map((video) => {
+          return (
+            <Video
+              key={video.video_num}
+              order={video.video_order}
+              title={video.video_title}
+              uploadDate={video.video_upload_date}
+              views={video.video_views}
+            />
+          );
+        })
+      )}
     </div>
   );
 };

@@ -65,10 +65,7 @@ router.get("/class/list/:profnum", async (req, res) => {
 });
 
 router.post("/video/info", async (req, res) => {
-  console.log(req.body);
   try {
-    const { body } = req;
-    console.log(body);
     const result = await profService.insertVideoInfo(req.body);
     return res
       .status(200)

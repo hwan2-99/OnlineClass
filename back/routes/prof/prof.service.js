@@ -28,13 +28,14 @@ module.exports = {
       const [{ affectedRows: result }] = await conn.query(query, [
         course_num,
         profnum,
-        fileName,
+        fileName.split(".")[0],
         video_title,
         video_order,
       ]);
       conn.release();
       return result;
     } catch (error) {
+      console.log(error);
       return error;
     }
   },
