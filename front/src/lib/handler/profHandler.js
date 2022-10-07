@@ -86,6 +86,20 @@ const profHandler = {
       console.log(error);
     }
   },
+
+  postVideoInfo: async (data) => {
+    console.log(data);
+    try {
+      let apiResult = await prof.postVideoInfo(data);
+      const result = await apiResult.json();
+
+      if (result.status === 200) {
+        return result;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default profHandler;

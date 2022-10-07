@@ -40,7 +40,7 @@ const VideoMain = () => {
       <hr />
       동영상 나불나불
       <BasicModal title={"영상업로드"}>
-        <VideoUpload />
+        <VideoUpload classnum={classnum} profnum={classInfo.prof_num} />
       </BasicModal>
       <h1>동영상 관리 있어야함</h1>
     </div>
