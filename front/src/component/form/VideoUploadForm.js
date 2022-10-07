@@ -21,8 +21,7 @@ const VideoUpload = () => {
     if (result.success) {
       setUpload(true);
       setFileName(result.fileName);
-      msg = `파일명 : ${result.fileName}
-       영상 길이 : ${20000} `;
+      msg = `파일명 : ${result.fileName}`;
       return;
     }
   };
@@ -36,7 +35,7 @@ const VideoUpload = () => {
     <div>
       <h1>강의 업로드</h1>
       <hr />
-      <p>업로드 시 필요한 데이터 정리하기</p>
+      <p>비디오를 업로드 하세요..</p>
       <Form form={form} onFinish={onSubmitHandler}>
         {!isUploaded ? (
           <Dropzone
@@ -77,9 +76,6 @@ const VideoUpload = () => {
           <Input />
         </Form.Item>
         <Form.Item name="video_order" label="강의 순서">
-          <InputNumber />
-        </Form.Item>
-        <Form.Item name="video_length" label="강의길이">
           <InputNumber />
         </Form.Item>
         <Form.Item>
