@@ -1,41 +1,61 @@
 import React, { useEffect, useRef, useState } from "react";
-import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { Button, Progress } from "antd";
-import { red, green } from "@ant-design/colors";
+import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
 import classes from "./CourseVideo.module.css";
-import FAQ from "./FAQ";
 import BasicModal from "../../layout/BasicModal";
 import studHandler from "../../lib/handler/studHandler";
 import QASend from "../form/QASend";
 import dateToUse from "../../lib/date";
+import ReactPlayer from "react-player";
 
 const CourseVideo = () => {
   const location = useLocation();
-
+  const videoRef = useRef();
   const studNum = useSelector((state) => state.num);
-  const [tagList, setTagList] = useState([]);
-  const [tag, setTag] = useState({});
+  const [secList, setSecList] = useState([]);
+  const [section, setSection] = useState({});
   const [loading, setLoading] = useState(false);
   const [qaList, setList] = useState([]);
-  const videoRef = useRef();
+  const [percent, setPercent] = useState([]);
+
+  //videoState
+  const [videoState, setVideoState] = useState({
+    playing: true, // 재생중인지
+    muted: false, // 음소거인지
+    controls: false, // 기본으로 제공되는 컨트롤러 사용할건지
+    volume: 0.5, // 볼륨크기
+    playbackRate: 1.0, // 배속
+    played: 0, // 재생의 정도 (value)
+    seeking: false, // 재생바를 움직이고 있는지
+    duration: 0, // 전체 시간
+  });
 
   const pauseHandler = () => {
     console.log("영상이 정지 됨");
     const time = 12000;
 
-    if (time < tag.end) {
-      setTag(tagList[0]);
+    //FAQ를 나타내는 로직필요
+    if (time < section.end) {
+      setSection(secList[0]);
     } else {
-      setTag(tagList[1]);
+      setSection(secList[1]);
     }
 
-    console.log(videoRef.current.getCurrentTime());
+    console.log(videoRef.current);
   };
 
   const onProgressHandler = (state) => {
-    console.log(state);
+    //퍼센트 계산
+    setPercent((state.playedSeconds / videoRef.current.getDuration()) * 100);
+
+    //퍼센트 따라서 progress 바꾸면 되겠네
+  };
+
+  //멈췄다 실행했다.
+  const playPauseHandler = () => {
+    setVideoState({ ...videoState, playing: !videoState.playing });
   };
 
   const { video_num, video_order, video_title, video_filename, video_length } =
@@ -43,23 +63,24 @@ const CourseVideo = () => {
   let i = 0;
 
   useEffect(() => {
-    const getVideoTag = async () => {
-      const result = await studHandler.getVideoTagList(video_num);
+    const getVideoSection = async () => {
+      const result = await studHandler.getVideoSecList(video_num);
       console.log("태그리스트", result);
-      setTagList(result);
-      setTag(tagList[0]);
+      setSecList(result);
+      setSection(secList[0]);
     };
-    getVideoTag();
+    getVideoSection();
   }, [video_num]);
 
   useEffect(() => {
     //에러
     try {
       const loadList = async () => {
-        if (tagList.length > 0) {
+        if (secList.length > 0) {
           //로딩중
           setLoading(true);
-          const result = await studHandler.getTagFAQList(tag.tag_num);
+          const result = await studHandler.getSecFAQList(section.sec_num);
+          console.log("65: 결과", result);
           setList(result);
         }
       };
@@ -68,7 +89,7 @@ const CourseVideo = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [tagList, tag]);
+  }, [secList, section]);
 
   return (
     <div className={classes["wrapper"]}>
@@ -88,17 +109,24 @@ const CourseVideo = () => {
             ref={videoRef}
             height="400px"
             url={`http://localhost:5000/stud/video/${video_filename}`}
-            playing={true}
-            muted={true}
-            controls={true}
+            playing={videoState.playing}
+            muted={videoState.muted}
+            controls={videoState.controls}
             poster={"../../asset/asset/play"}
+            volume={videoState.volume}
             light={true}
-            pip={false}
             onPause={pauseHandler}
             onProgress={onProgressHandler}
           />
+          <div>
+            {!videoState.playing ? (
+              <CaretRightOutlined onClick={playPauseHandler} />
+            ) : (
+              <PauseOutlined onClick={playPauseHandler} />
+            )}
+          </div>
           <>
-            <Progress percent={60} steps={30} />
+            <Progress percent={percent} />
           </>
         </section>
       </div>
@@ -109,6 +137,7 @@ const CourseVideo = () => {
             <BasicModal title={"Q&A 보내기"}>
               <h3>Q&A보내기</h3>
               <hr />
+              {/* 이부분 수정 */}
               <QASend info={{ tag: 2, std: studNum, vid: video_num }} />
             </BasicModal>
           )}

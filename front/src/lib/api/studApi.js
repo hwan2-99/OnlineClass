@@ -29,7 +29,7 @@ const studApi = {
     });
   },
 
-  getVideoTag: (num) => {
+  getVideoSec: (num) => {
     return fetch(CREATE_API + "stud/video/section/" + num, {
       method: "get",
       headers: {
@@ -38,7 +38,7 @@ const studApi = {
     });
   },
 
-  getTagFAQ: (secnum) => {
+  getSecFAQ: (secnum) => {
     return fetch(CREATE_API + "stud/faq/" + secnum, {
       method: "get",
       headers: {

@@ -47,9 +47,9 @@ const studHandler = {
     }
   },
 
-  getVideoTagList: async (num) => {
+  getVideoSecList: async (num) => {
     try {
-      let apiResult = await studApi.getVideoTag(num);
+      let apiResult = await studApi.getVideoSec(num);
       const listResult = await apiResult.json();
 
       if (listResult.status === SUCCESS) {
@@ -61,9 +61,9 @@ const studHandler = {
     }
   },
 
-  getTagFAQList: async (tagnum) => {
+  getSecFAQList: async (tagnum) => {
     try {
-      let apiResult = await studApi.getTagFAQ(tagnum);
+      let apiResult = await studApi.getSecFAQ(tagnum);
       const listResult = await apiResult.json();
 
       if (listResult.status === SUCCESS) {
