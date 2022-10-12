@@ -48,7 +48,10 @@ const CourseVideo = () => {
 
   const onProgressHandler = (state) => {
     //퍼센트 계산
-    setPercent((state.playedSeconds / videoRef.current.getDuration()) * 100);
+    setPercent(
+      Math.round((state.playedSeconds / videoRef.current.getDuration()) * 100) /
+        10
+    );
 
     //퍼센트 따라서 progress 바꾸면 되겠네
   };
@@ -124,10 +127,9 @@ const CourseVideo = () => {
             ) : (
               <PauseOutlined onClick={playPauseHandler} />
             )}
+
+            <Progress percent={percent} steps={secList.length} />
           </div>
-          <>
-            <Progress percent={percent} />
-          </>
         </section>
       </div>
       <div className={classes["FAQ-wrapper"]}>
