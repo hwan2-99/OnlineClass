@@ -4,6 +4,20 @@ const SUCCESS = 200;
 const FAIL = 500;
 
 const profHandler = {
+  postSectionToVideo: async (Info) => {
+    try {
+      let apiResult = await prof.postVideoSection(Info);
+
+      const result = apiResult;
+
+      return result;
+    } catch (error) {
+      console.log("Fail");
+      console.log(error);
+
+      return false;
+    }
+  },
   classPost: async (Info) => {
     try {
       let apiResult = await prof.classOpen(Info);

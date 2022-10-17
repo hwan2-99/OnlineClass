@@ -46,6 +46,7 @@ const VideoMain = () => {
           return (
             <Video
               key={video.video_num}
+              num={video.video_num}
               order={video.video_order}
               title={video.video_title}
               uploadDate={video.video_upload_date}

@@ -2,6 +2,33 @@ const pool = require("../../config/dbConfig");
 const multer = require("multer");
 
 module.exports = {
+  insertSectionToVideo: async (sectionInfo) => {
+    try {
+      const conn = await pool.getConnection();
+
+      const { start, end, content, video_num } = sectionInfo;
+
+      const query = `Insert into video_section (
+        video_num , 
+        sec_start,  
+        sec_end,
+        sec_content
+      ) values (?,?,?,?)`;
+
+      const [{ affectedRows: result }] = await conn.query(query, [
+        video_num,
+        start,
+        end,
+        content,
+      ]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
   videoUpload: async (videoInfo) => {
     //서버에 저장
     console.log(videoInfo);

@@ -1,4 +1,6 @@
 import { Button } from "antd";
+import BasicModal from "../../layout/BasicModal";
+import SectionAdd from "../form/SectionAdd";
 import classes from "./video.module.css";
 
 const Video = (props) => {
@@ -14,7 +16,9 @@ const Video = (props) => {
       </div>
       <div className={classes.wrapper}>
         <Button>Q&A 관리</Button>
-        <Button>Section 관리</Button>
+        <BasicModal title={"섹션 추가"}>
+          <SectionAdd video_num={props.num} />
+        </BasicModal>
         <Button>강의 정보 관리</Button>
       </div>
 
