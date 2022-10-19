@@ -5,7 +5,7 @@ import Student from "./page/Student";
 import Profesor from "./page/Profesor";
 import VideoMain from "./component/prof/VideoMain";
 import NotFound from "./page/NotFound";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import SignUp from "./page/SignUp";
 import classes from "./app.module.css";
 import ClassOpen from "./component/form/ClassOpen";
