@@ -14,8 +14,14 @@ const CourseVideo = () => {
   const location = useLocation();
   const videoRef = useRef();
   const studNum = useSelector((state) => state.num);
-  const [secList, setSecList] = useState([]);
-  const [section, setSection] = useState({});
+  const [secList, setSecList] = useState([{}]);
+  const [section, setSection] = useState({
+    sec_content: "",
+    sec_end: "",
+    sec_num: null,
+    sec_start: "",
+    video_num: null,
+  });
   const [loading, setLoading] = useState(false);
   const [qaList, setList] = useState([]);
   const [percent, setPercent] = useState([]);
@@ -49,8 +55,7 @@ const CourseVideo = () => {
   const onProgressHandler = (state) => {
     //퍼센트 계산
     setPercent(
-      Math.round((state.playedSeconds / videoRef.current.getDuration()) * 100) /
-        10
+      Math.round((state.playedSeconds / videoRef.current.getDuration()) * 100)
     );
 
     //퍼센트 따라서 progress 바꾸면 되겠네
@@ -63,36 +68,36 @@ const CourseVideo = () => {
 
   const { video_num, video_order, video_title, video_filename, video_length } =
     location.state;
-  let i = 0;
 
-  useEffect(() => {
-    const getVideoSection = async () => {
-      const result = await studHandler.getVideoSecList(video_num);
-      console.log("태그리스트", result);
-      setSecList(result);
+  const getVideoSection = async () => {
+    const result = await studHandler.getVideoSecList(video_num);
+    console.log("db 결과", result);
+    setSecList(result);
+    console.log("현재 선택된 섹션", section);
+  };
+
+  const loadList = async () => {
+    if (secList.length > 0) {
+      console.log("현재 섹션", section);
       setSection(secList[0]);
-    };
-    getVideoSection();
-  }, [video_num]);
+      const result = await studHandler.getSecFAQList(section.sec_num);
+      console.log("65: 결과", result);
+      setList(result);
+    }
+  };
 
+  //비디오 섹션 불러오는 EFFECT
+  //섹션 FAQ를 불러오는 EFFECT
   useEffect(() => {
-    //에러
     try {
-      const loadList = async () => {
-        if (secList.length > 0) {
-          //로딩중
-          setLoading(true);
-          const result = await studHandler.getSecFAQList(section.sec_num);
-          console.log("65: 결과", result);
-          setList(result);
-        }
-      };
+      setLoading(true);
+      getVideoSection();
       loadList();
       setLoading(false);
     } catch (error) {
       console.log(error);
     }
-  }, [secList, section]);
+  }, [video_num]);
 
   return (
     <div className={classes["wrapper"]}>
@@ -139,8 +144,13 @@ const CourseVideo = () => {
             <BasicModal title={"Q&A 보내기"}>
               <h3>Q&A보내기</h3>
               <hr />
-              {/* 이부분 수정 */}
-              <QASend info={{ tag: 2, std: studNum, vid: video_num }} />
+              <QASend
+                info={{
+                  sec_num: section.sec_num,
+                  std: studNum,
+                  vid: video_num,
+                }}
+              />
             </BasicModal>
           )}
           <div className={classes["qa-wrapper"]}>

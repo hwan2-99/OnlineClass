@@ -27,12 +27,12 @@ module.exports = {
   },
 
   qaPost: async (info) => {
-    console.log(info);
+    console.log("q&a 정보", info);
     try {
       const conn = await pool.getConnection();
 
       const {
-        secnum,
+        sec_num,
         videonum,
         studnum,
         qa_title,
@@ -45,7 +45,7 @@ module.exports = {
       ) values (?,?,?,NOW(),?,?,?)`;
 
       const [{ affectedRows: result }] = await conn.query(query, [
-        secnum,
+        sec_num,
         videonum,
         studnum,
         qa_title,

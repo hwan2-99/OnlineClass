@@ -1,16 +1,26 @@
 import React from "react";
 import { Button, Form, Input } from "antd";
 import studHandler from "../../lib/handler/studHandler";
+import { useForm } from "rc-field-form";
 
 const QASend = (props) => {
-  const { tag, std, vid } = props.info;
+  const { sec_num, std, vid } = props.info;
+
+  const [form] = Form.useForm();
 
   const onFinish = async (values) => {
     const info = values;
-    info.tagnum = tag;
+    info.sec_num = sec_num;
     info.studnum = std;
     info.videonum = vid;
     const result = await studHandler.postQAStud(info);
+    form.resetFields();
+
+    if (result.status === 200) {
+      alert("Q&A 전송 완료");
+    } else {
+      alert("오류 발생");
+    }
 
     console.log(result);
   };
@@ -22,6 +32,7 @@ const QASend = (props) => {
   return (
     <Form
       name="basic"
+      form={form}
       labelCol={{
         span: 8,
       }}
