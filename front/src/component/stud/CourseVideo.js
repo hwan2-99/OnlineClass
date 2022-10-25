@@ -97,7 +97,7 @@ const CourseVideo = () => {
 
   const setSectionHandler = (sec) => {
     setSection(sec);
-    // loadList();
+    loadList(sec.sec_num);
   };
 
   //비디오 섹션 불러오는 EFFECT
@@ -157,15 +157,17 @@ const CourseVideo = () => {
           {!loading && (
             <>
               {secList.map((sec) => {
-                <Button
-                  type="primary"
-                  onClick={(e) => {
-                    setSectionHandler(sec);
-                  }}
-                  block
-                >
-                  {"섹션"}
-                </Button>;
+                return (
+                  <Button
+                    onClick={(e) => {
+                      setSectionHandler(sec);
+                    }}
+                    block
+                    type="dashed"
+                  >
+                    {sec.sec_content}
+                  </Button>
+                );
               })}
               <BasicModal title={"Q&A 보내기"}>
                 <h3>Q&A보내기</h3>
