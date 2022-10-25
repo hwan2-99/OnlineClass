@@ -47,6 +47,15 @@ const prof = {
     });
   },
 
+  getSectionQAList: (sec_num) => {
+    return fetch(CREATE_API + "prof/qa/list/" + sec_num, {
+      method: "get",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  },
+
   postVideoInClass: (video) => {
     return fetch(CREATE_API + "prof/upload/video", {
       method: "post",

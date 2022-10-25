@@ -88,6 +88,19 @@ const profHandler = {
     }
   },
 
+  getSectionQAList: async (sec_num) => {
+    try {
+      let apiResult = await prof.getSectionQAList(sec_num);
+      const result = await apiResult.json();
+
+      if (result.status === SUCCESS) {
+        return result;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   postVideo: async (data) => {
     try {
       let apiResult = await prof.postVideoInClass(data);

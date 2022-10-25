@@ -3,6 +3,7 @@ import { Form, Input, Button, Checkbox } from "antd";
 import userHandler from "../../lib/handler/userHandler";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const LoginForm = (props) => {
   const dispatch = useDispatch();
@@ -93,6 +94,7 @@ const LoginForm = (props) => {
           Submit
         </Button>
       </Form.Item>
+      <Link to={"signup"}>회원가입</Link>
     </Form>
   );
 };

@@ -22,7 +22,7 @@ const CourseVideo = () => {
     sec_start: "",
     video_num: null,
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [qaList, setList] = useState([]);
   const [percent, setPercent] = useState([]);
 
@@ -36,20 +36,21 @@ const CourseVideo = () => {
     played: 0, // 재생의 정도 (value)
     seeking: false, // 재생바를 움직이고 있는지
     duration: 0, // 전체 시간
+    currentTime: 0,
   });
 
   const pauseHandler = () => {
     console.log("영상이 정지 됨");
-    const time = 12000;
+    // const time = 12000;
 
-    //FAQ를 나타내는 로직필요
-    if (time < section.end) {
-      setSection(secList[0]);
-    } else {
-      setSection(secList[1]);
-    }
+    // //FAQ를 나타내는 로직필요
+    // if (time < section.end) {
+    //   setSection(secList[0]);
+    // } else {
+    //   setSection(secList[1]);
+    // }
 
-    console.log(videoRef.current);
+    // console.log(videoRef.current);
   };
 
   const onProgressHandler = (state) => {
@@ -57,33 +58,46 @@ const CourseVideo = () => {
     setPercent(
       Math.round((state.playedSeconds / videoRef.current.getDuration()) * 100)
     );
-
+    setVideoState({
+      ...videoState,
+      currentTime: state.playedSeconds,
+    });
     //퍼센트 따라서 progress 바꾸면 되겠네
   };
 
   //멈췄다 실행했다.
   const playPauseHandler = () => {
-    setVideoState({ ...videoState, playing: !videoState.playing });
+    setVideoState({
+      ...videoState,
+      playing: !videoState.playing,
+    });
+
+    console.log(videoState);
   };
 
-  const { video_num, video_order, video_title, video_filename, video_length } =
+  const { video_num, video_order, video_title, video_filename } =
     location.state;
 
-  const getVideoSection = async () => {
-    const result = await studHandler.getVideoSecList(video_num);
+  const getVideoSection = async (num) => {
+    const result = await studHandler.getVideoSecList(num);
     console.log("db 결과", result);
     setSecList(result);
-    console.log("현재 선택된 섹션", section);
+    setSection(result[0]);
   };
 
-  const loadList = async () => {
+  const loadList = async (num) => {
+    setLoading(true);
     if (secList.length > 0) {
-      console.log("현재 섹션", section);
-      setSection(secList[0]);
-      const result = await studHandler.getSecFAQList(section.sec_num);
+      const result = await studHandler.getSecFAQList(num);
       console.log("65: 결과", result);
       setList(result);
     }
+    setLoading(false);
+  };
+
+  const setSectionHandler = (sec) => {
+    setSection(sec);
+    // loadList();
   };
 
   //비디오 섹션 불러오는 EFFECT
@@ -91,8 +105,7 @@ const CourseVideo = () => {
   useEffect(() => {
     try {
       setLoading(true);
-      getVideoSection();
-      loadList();
+      getVideoSection(video_num);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -140,18 +153,33 @@ const CourseVideo = () => {
       <div className={classes["FAQ-wrapper"]}>
         <section>
           <h2>FAQ</h2>
+
           {!loading && (
-            <BasicModal title={"Q&A 보내기"}>
-              <h3>Q&A보내기</h3>
-              <hr />
-              <QASend
-                info={{
-                  sec_num: section.sec_num,
-                  std: studNum,
-                  vid: video_num,
-                }}
-              />
-            </BasicModal>
+            <>
+              {secList.map((sec) => {
+                <Button
+                  type="primary"
+                  onClick={(e) => {
+                    setSectionHandler(sec);
+                  }}
+                  block
+                >
+                  {"섹션"}
+                </Button>;
+              })}
+              <BasicModal title={"Q&A 보내기"}>
+                <h3>Q&A보내기</h3>
+                <hr />
+                <QASend
+                  info={{
+                    sec_num: section.sec_num,
+                    std: studNum,
+                    vid: video_num,
+                    vid_stop_time: videoState.currentTime,
+                  }}
+                />
+              </BasicModal>
+            </>
           )}
           <div className={classes["qa-wrapper"]}>
             <br />

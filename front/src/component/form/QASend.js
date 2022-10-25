@@ -4,7 +4,7 @@ import studHandler from "../../lib/handler/studHandler";
 import { useForm } from "rc-field-form";
 
 const QASend = (props) => {
-  const { sec_num, std, vid } = props.info;
+  const { sec_num, std, vid, vid_stop_time } = props.info;
 
   const [form] = Form.useForm();
 
@@ -13,6 +13,7 @@ const QASend = (props) => {
     info.sec_num = sec_num;
     info.studnum = std;
     info.videonum = vid;
+    info.video_stop_time = vid_stop_time;
     const result = await studHandler.postQAStud(info);
     form.resetFields();
 
@@ -60,17 +61,6 @@ const QASend = (props) => {
       <Form.Item
         label="질문 내용"
         name="qa_content"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="답변 (임시)"
-        name="qa_reply_content"
         rules={[
           {
             required: true,

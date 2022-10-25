@@ -30,31 +30,33 @@ module.exports = {
     console.log("q&a 정보", info);
     try {
       const conn = await pool.getConnection();
+      console.log(info);
 
       const {
         sec_num,
         videonum,
         studnum,
         qa_title,
+        video_stop_time,
         qa_content,
-        qa_reply_content,
       } = info;
 
       const query = `Insert into question (
-        sec_num,video_num, stud_num, qa_send_time, qa_title, qa_content,qa_reply_content
-      ) values (?,?,?,NOW(),?,?,?)`;
+        sec_num,video_num, stud_num,video_stop_time, qa_send_time, qa_title,qa_content
+      ) values (?,?,?,?,NOW(),?,?)`;
 
       const [{ affectedRows: result }] = await conn.query(query, [
         sec_num,
         videonum,
         studnum,
+        video_stop_time,
         qa_title,
         qa_content,
-        qa_reply_content,
       ]);
       conn.release();
       return result;
     } catch (error) {
+      console.log(error);
       return error;
     }
   },

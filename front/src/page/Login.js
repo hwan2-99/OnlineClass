@@ -5,7 +5,7 @@ import classes from "./stylesheet/page.module.css";
 const Login = () => {
   return (
     <div className={classes.wrapper}>
-      <h1>로그인 페이지</h1>
+      <h1>Interactive Online Class</h1>
       <hr />
       <div className={classes["login-wrapper"]}>
         <LoginForm />
