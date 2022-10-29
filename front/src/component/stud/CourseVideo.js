@@ -106,6 +106,7 @@ const CourseVideo = () => {
     try {
       setLoading(true);
       getVideoSection(video_num);
+      setList([]);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -187,6 +188,7 @@ const CourseVideo = () => {
             <br />
             {!loading && (
               <>
+                {qaList.length === 0 && <h1> Q&A 목록 나열</h1>}
                 {qaList.map((qa) => {
                   return (
                     <div key={qa.qa_num} className={classes.qa}>
