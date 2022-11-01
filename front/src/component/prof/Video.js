@@ -1,6 +1,7 @@
 import { Button } from "antd";
 import BasicModal from "../../layout/BasicModal";
 import SectionAdd from "../form/SectionAdd";
+import QaManage from "./QaManage";
 import classes from "./video.module.css";
 
 const Video = (props) => {
@@ -15,7 +16,9 @@ const Video = (props) => {
         <p> 조회수: {views}회</p>
       </div>
       <div className={classes.wrapper}>
-        <Button>Q&A 관리</Button>
+        <BasicModal title={"질의응답 관리"}>
+          <QaManage video_num={props.num} />
+        </BasicModal>
         <BasicModal title={"섹션 추가"}>
           <SectionAdd video_num={props.num} />
         </BasicModal>
