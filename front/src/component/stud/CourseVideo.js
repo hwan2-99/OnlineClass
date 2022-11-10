@@ -90,7 +90,7 @@ const CourseVideo = () => {
     if (secList.length > 0) {
       const result = await studHandler.getSecFAQList(num);
       console.log("65: 결과", result);
-      setList(result);
+      setList(result.filter((qa) => qa.qa_response_yn === 1));
     }
     setLoading(false);
   };
@@ -154,20 +154,22 @@ const CourseVideo = () => {
       <div className={classes["FAQ-wrapper"]}>
         <section>
           <h2>FAQ</h2>
-
-          {!loading && (
+          {secList.length === 0 && <h1> 섹션이 생성 되지 않았습니다.</h1>}
+          {!(secList.length === 0) && (
             <>
               {secList.map((sec) => {
                 return (
-                  <Button
-                    onClick={(e) => {
-                      setSectionHandler(sec);
-                    }}
-                    block
-                    type="dashed"
-                  >
-                    {sec.sec_content}
-                  </Button>
+                  <div key={sec.sec_num}>
+                    <Button
+                      onClick={(e) => {
+                        setSectionHandler(sec);
+                      }}
+                      block
+                      type="dashed"
+                    >
+                      {sec.sec_content}
+                    </Button>
+                  </div>
                 );
               })}
               <BasicModal title={"Q&A 보내기"}>
@@ -188,7 +190,7 @@ const CourseVideo = () => {
             <br />
             {!loading && (
               <>
-                {qaList.length === 0 && <h1> Q&A 목록 나열</h1>}
+                {qaList.length === 0 && <h1> Q&A가 없습니다.</h1>}
                 {qaList.map((qa) => {
                   return (
                     <div key={qa.qa_num} className={classes.qa}>

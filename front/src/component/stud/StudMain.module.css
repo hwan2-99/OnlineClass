@@ -6,7 +6,8 @@
 
 .video-list-wrapper {
   display: flex;
-  overflow-x: scroll;
+  flex-wrap: wrap;
+  justify-content: center;
   overflow-y: hidden;
   height: auto;
 }
