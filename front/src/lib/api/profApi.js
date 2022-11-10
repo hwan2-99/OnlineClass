@@ -86,6 +86,16 @@ const prof = {
       body: JSON.stringify(info),
     });
   },
+
+  updateQAAnswer: function (info) {
+    return fetch(CREATE_API + "prof/section/update", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(info),
+    });
+  },
 };
 
 export default prof;

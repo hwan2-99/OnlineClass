@@ -15,6 +15,18 @@ router.post("/video/section", async (req, res) => {
   }
 });
 
+router.post("/section/update", async (req, res) => {
+  try {
+    console.log(req.body);
+    const result = await profService.updateQAAnswer(req.body);
+    return res
+      .status(200)
+      .json({ status: 200, data: result, message: "답변 성공" });
+  } catch (error) {
+    return res.status(200).json({ status: 500, message: "오류 발생" });
+  }
+});
+
 router.post("/class", async (req, res) => {
   try {
     const result = await profService.insertClass(req.body);

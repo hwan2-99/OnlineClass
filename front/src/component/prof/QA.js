@@ -1,9 +1,11 @@
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
+import profHandler from "../../lib/handler/profHandler";
 import studHandler from "../../lib/handler/studHandler";
 
 const QA = (props) => {
   const [qaList, setQaList] = useState([]);
+  const [curAnswer, setAnswer] = useState("");
 
   const loadList = async (num) => {
     const result = await studHandler.getSecFAQList(num);
@@ -14,6 +16,21 @@ const QA = (props) => {
     loadList(props.sec_num);
     console.log("큐엔에이 리스트", qaList);
   }, [props.sec_num]);
+
+  const QAAnswerPost = async (num, answer) => {
+    const body = {
+      num,
+      answer,
+    };
+
+    console.log(body);
+
+    const result = await profHandler.postQAAnswer(body);
+
+    console.log(result);
+    await loadList(props.sec_num);
+    setAnswer("");
+  };
 
   return (
     <>
@@ -31,10 +48,22 @@ const QA = (props) => {
                 </>
               ) : (
                 <>
-                  <Input />
-                  <Button>답변 하기</Button>
+                  <Input
+                    onChange={(e) => {
+                      // console.log(e.currentTarget.value);
+                      setAnswer(e.currentTarget.value);
+                    }}
+                  />
+                  <Button
+                    onClick={() => {
+                      QAAnswerPost(qa.qa_num, curAnswer);
+                    }}
+                  >
+                    답변 하기
+                  </Button>
                 </>
               )}
+              <hr />
             </div>
           );
         })}

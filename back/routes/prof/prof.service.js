@@ -29,6 +29,22 @@ module.exports = {
     }
   },
 
+  updateQAAnswer: async ({ num, answer }) => {
+    try {
+      const conn = await pool.getConnection();
+
+      const query = `UPDATE question SET qa_reply_content = ?, qa_response_yn = 1 
+      WHERE qa_num = ?`;
+
+      const [{ affectedRows: result }] = await conn.query(query, [answer, num]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
   videoUpload: async (videoInfo) => {
     //서버에 저장
     console.log(videoInfo);

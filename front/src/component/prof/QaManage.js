@@ -30,6 +30,7 @@ const QaManage = (props) => {
         {secList.length >= 1 && (
           <>
             <section className={classes.sectionWrapper}>
+              <h1>Section List</h1>
               {secList.map((sec) => {
                 return (
                   <div key={sec.sec_num} className={classes.section}>

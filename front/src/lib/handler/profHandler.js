@@ -127,6 +127,19 @@ const profHandler = {
       console.log(error);
     }
   },
+
+  postQAAnswer: async (data) => {
+    try {
+      let apiResult = await prof.updateQAAnswer(data);
+      const result = await apiResult.json();
+
+      if (result.status === 200) {
+        return result;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default profHandler;
