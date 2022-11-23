@@ -26,7 +26,7 @@ const MyCourse = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [studnum]);
 
   if (loading) {
     return (

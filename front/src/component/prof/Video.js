@@ -7,12 +7,15 @@ import classes from "./video.module.css";
 const Video = (props) => {
   const { order, title, uploadDate, views } = props;
 
+  const date = new Date(uploadDate);
+  const upload = `${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDay()}일`;
+
   return (
     <>
       <h1>{title}</h1>
       <div className={classes.wrapper}>
         <h3> 제 {order} 강 </h3>
-        <p> 업로드 날짜 {uploadDate} </p>
+        <p> 업로드 날짜 :{upload} </p>
         <p> 조회수: {views}회</p>
       </div>
       <div className={classes.wrapper}>

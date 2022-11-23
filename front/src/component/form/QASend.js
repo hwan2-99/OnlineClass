@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Textarea } from "antd";
 import studHandler from "../../lib/handler/studHandler";
 import { useForm } from "rc-field-form";
 
@@ -67,7 +67,7 @@ const QASend = (props) => {
           },
         ]}
       >
-        <Input />
+        <Input.TextArea rows={4} />
       </Form.Item>
       <Form.Item
         wrapperCol={{
