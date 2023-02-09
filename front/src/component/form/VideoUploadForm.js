@@ -3,7 +3,6 @@ import { Button, Form, Input, InputNumber, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Dropzone from "react-dropzone";
 import profHandler from "../../lib/handler/profHandler";
-import prof from "../../lib/api/profApi";
 
 let msg = "";
 
