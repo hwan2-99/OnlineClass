@@ -19,6 +19,7 @@ const ClassList = () => {
         const result = await profHandler.getClassList(num);
         setList(result);
       };
+
       loadList();
       setLoading(false);
     } catch (error) {
@@ -27,9 +28,11 @@ const ClassList = () => {
   }, []);
 
   if (loading) {
-    <div>
-      <h1>로딩중</h1>
-    </div>;
+    return (
+      <div>
+        <h1>로딩중</h1>
+      </div>
+    );
   } else {
     return (
       <div>

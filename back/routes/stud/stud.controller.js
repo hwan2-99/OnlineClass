@@ -50,7 +50,11 @@ router.get("/faq/:secnum", async (req, res) => {
     return res.status(200).json({ status: 500, message: "오류 발생" });
   }
 });
-
+router.get("/video/:num", (req, res) => {
+  res.sendFile(
+    "C:\\Users\\KT\\Desktop\\onlineClass\\back\\uploads\\video" + "/video.mp4"
+  );
+});
 //비디오 태그 리스트 가져오기
 router.get("/video/section/:num", async (req, res) => {
   try {

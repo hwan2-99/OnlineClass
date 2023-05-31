@@ -14,7 +14,7 @@ const { createPool } = require("mysql2/promise");
 const dbInfo = {
   host: "localhost",
   user: "root",
-  password: "1111",
+  password: "123123",
   database: "onlineclass",
   connectTimeout: 5000,
   connectionLimit: 30, //default 10

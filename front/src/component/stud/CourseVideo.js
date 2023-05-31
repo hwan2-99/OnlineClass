@@ -14,14 +14,14 @@ const CourseVideo = () => {
   const location = useLocation();
   const videoRef = useRef();
   const studNum = useSelector((state) => state.num);
-  const [secList, setSecList] = useState([{}]);
-  const [section, setSection] = useState({
-    sec_content: "",
-    sec_end: "",
-    sec_num: null,
-    sec_start: "",
-    video_num: null,
-  });
+  // const [secList, setSecList] = useState([{}]);
+  // const [section, setSection] = useState({
+  //   sec_content: "",
+  //   sec_end: "",
+  //   sec_num: null,
+  //   sec_start: "",
+  //   video_num: null,
+  // });
   const [loading, setLoading] = useState(true);
   const [qaList, setList] = useState([]);
   const [percent, setPercent] = useState([]);
@@ -75,30 +75,34 @@ const CourseVideo = () => {
     console.log(videoState);
   };
 
-  const { video_num, video_order, video_title, video_filename } =
-    location.state;
+  const {
+    video_num,
+    video_order,
+    video_title,
+    video_filename,
+  } = location.state;
 
   const getVideoSection = async (num) => {
     const result = await studHandler.getVideoSecList(num);
     console.log("db 결과", result);
-    setSecList(result);
-    setSection(result[0]);
+    // setSecList(result);
+    // setSection(result[0]);
   };
 
-  const loadList = async (num) => {
-    setLoading(true);
-    if (secList.length > 0) {
-      const result = await studHandler.getSecFAQList(num);
-      console.log("65: 결과", result);
-      setList(result.filter((qa) => qa.qa_response_yn === 1));
-    }
-    setLoading(false);
-  };
+  // const loadList = async (num) => {
+  //   setLoading(true);
+  //   if (secList.length > 0) {
+  //     const result = await studHandler.getSecFAQList(num);
+  //     console.log("65: 결과", result);
+  //     setList(result.filter((qa) => qa.qa_response_yn === 1));
+  //   }
+  //   setLoading(false);
+  // };
 
-  const setSectionHandler = (sec) => {
-    setSection(sec);
-    loadList(sec.sec_num);
-  };
+  // const setSectionHandler = (sec) => {
+  //   setSection(sec);
+  //   loadList(sec.sec_num);
+  // };
 
   //비디오 섹션 불러오는 EFFECT
   //섹션 FAQ를 불러오는 EFFECT
@@ -121,16 +125,16 @@ const CourseVideo = () => {
           <h1>
             제{video_order} 강
             <br />
-            강의 명: {video_title}
+            강의 명: {video_title},{video_filename}
             <br />
           </h1>
-          비디오 번호: {video_num}
+          비디오 번호: {video_num} / {video_filename}
           <hr />
           <ReactPlayer
             width="inherit"
             ref={videoRef}
             height="400px"
-            url={`http://localhost:5000/stud/video/${video_filename}`}
+            url={`http://localhost:3000/${video_filename}.mp4`}
             playing={videoState.playing}
             muted={videoState.muted}
             controls={videoState.controls}
@@ -147,14 +151,14 @@ const CourseVideo = () => {
               <PauseOutlined onClick={playPauseHandler} />
             )}
 
-            <Progress percent={percent} steps={secList.length} />
+            {/* <Progress percent={percent} steps={secList.length} /> */}
           </div>
         </section>
       </div>
       <div className={classes["FAQ-wrapper"]}>
         <section>
           <h2>FAQ</h2>
-          {secList.length === 0 && <h1> 섹션이 생성 되지 않았습니다.</h1>}
+          {/* {secList.length === 0 && <h1> 섹션이 생성 되지 않았습니다.</h1>}
           {!(secList.length === 0) && (
             <>
               {secList.map((sec) => {
@@ -185,7 +189,7 @@ const CourseVideo = () => {
                 />
               </BasicModal>
             </>
-          )}
+          )} */}
           <div className={classes["qa-wrapper"]}>
             <br />
             {!loading && (

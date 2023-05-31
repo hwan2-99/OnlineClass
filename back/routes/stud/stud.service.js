@@ -98,22 +98,6 @@ module.exports = {
     }
   },
 
-  getVideoSectionList: async (num) => {
-    try {
-      const conn = await pool.getConnection();
-
-      const query = `select * from video_section
-        where video_num = ?`;
-
-      const [result] = await conn.query(query, [num]);
-      conn.release();
-      return result;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  },
-
   getSectionFaqList: async (num) => {
     try {
       const conn = await pool.getConnection();

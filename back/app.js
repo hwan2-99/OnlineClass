@@ -31,6 +31,7 @@ app.use("/", indexRouter);
 app.use("/user", usersRouter);
 app.use("/prof", profRouter);
 app.use("/stud", studRouter);
+app.use("/video", express.static("uploads/video"));
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -54,5 +55,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-
+app.listen(3000, () => {
+  console.log("서버가 3000 포트에서 실행 중입니다.");
+});
 module.exports = app;
