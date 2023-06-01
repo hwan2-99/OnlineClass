@@ -1,8 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { Button, Progress } from "antd";
-import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
+import { Button, Progress, Slider } from "antd";
+import {
+  CaretRightOutlined,
+  PauseOutlined,
+  SoundOutlined,
+  SoundFilled,
+} from "@ant-design/icons";
 import classes from "./CourseVideo.module.css";
 import BasicModal from "../../layout/BasicModal";
 import studHandler from "../../lib/handler/studHandler";
@@ -25,6 +30,30 @@ const CourseVideo = () => {
   const [loading, setLoading] = useState(true);
   const [qaList, setList] = useState([]);
   const [percent, setPercent] = useState([]);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [showControls, setShowControls] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const toggleMuteHandler = () => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      muted: !prevState.muted,
+    }));
+  };
+
+  const onVolumeChangeHandler = (value) => {
+    setVolume(value);
+    setVideoState((prevState) => ({
+      ...prevState,
+      volume: value,
+    }));
+  };
+  const onMouseEnterHandler = () => {
+    setShowControls(true);
+  };
+
+  const onMouseLeaveHandler = () => {
+    setShowControls(false);
+  };
 
   //videoState
   const [videoState, setVideoState] = useState({
@@ -62,6 +91,7 @@ const CourseVideo = () => {
       ...videoState,
       currentTime: state.playedSeconds,
     });
+    setCurrentTime(state.playedSeconds); // 추가된 부분
     //퍼센트 따라서 progress 바꾸면 되겠네
   };
 
@@ -81,6 +111,14 @@ const CourseVideo = () => {
     video_title,
     video_filename,
   } = location.state;
+
+  const onSeekHandler = (value) => {
+    videoRef.current.seekTo(value);
+    setVideoState({
+      ...videoState,
+      currentTime: value,
+    });
+  };
 
   const getVideoSection = async (num) => {
     const result = await studHandler.getVideoSecList(num);
@@ -119,7 +157,11 @@ const CourseVideo = () => {
 
   return (
     <div className={classes["wrapper"]}>
-      <div className={classes["video-wrapper"]}>
+      <div
+        className={classes["video-wrapper"]}
+        onMouseEnter={onMouseEnterHandler}
+        onMouseLeave={onMouseLeaveHandler}
+      >
         <h2>강의실</h2>
         <section>
           <h1>
@@ -144,6 +186,37 @@ const CourseVideo = () => {
             onPause={pauseHandler}
             onProgress={onProgressHandler}
           />
+          {showControls && (
+            <div className={classes["video-controls"]}>
+              <div className={classes["control-item"]}>
+                {videoState.muted ? (
+                  <SoundOutlined onClick={toggleMuteHandler} />
+                ) : (
+                  <SoundFilled onClick={toggleMuteHandler} />
+                )}
+              </div>
+              <div className={classes["control-item"]}>
+                <Slider
+                  min={0}
+                  max={1}
+                  step={0.1}
+                  value={volume}
+                  onChange={onVolumeChangeHandler}
+                  vertical
+                />
+              </div>
+              <div className={classes["control-item"]}>
+                <Slider
+                  min={0}
+                  max={videoRef.current ? videoRef.current.getDuration() : 0}
+                  step={0.1}
+                  value={videoState.currentTime}
+                  onChange={onSeekHandler}
+                  tooltipVisible={false}
+                />
+              </div>
+            </div>
+          )}
           <div>
             {!videoState.playing ? (
               <CaretRightOutlined onClick={playPauseHandler} />
@@ -190,6 +263,7 @@ const CourseVideo = () => {
               </BasicModal>
             </>
           )} */}
+
           <div className={classes["qa-wrapper"]}>
             <br />
             {!loading && (
@@ -207,6 +281,10 @@ const CourseVideo = () => {
                 })}
               </>
             )}
+            <div className={classes["video-overlay"]}>
+              {" "}
+              <p className={classes["current-time"]}>{currentTime}</p>{" "}
+            </div>{" "}
           </div>
         </section>
       </div>

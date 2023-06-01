@@ -81,6 +81,20 @@ router.get("/video/list/:classnum", async (req, res) => {
   }
 });
 
+// 영상 문제 등록
+router.post("/video/:video_num/problem", async (req, res) => {
+  try {
+    const { video_num } = req.params;
+    const { type, comment } = req.body;
+    const result = await studService.postProblem({ video_num, type, comment });
+    return res
+      .status(200)
+      .json({ status: 200, data: result, message: "문제 등록 성공" });
+  } catch (error) {
+    return res.status(500).json({ status: 500, message: "오류 발생" });
+  }
+});
+
 //비디오 스트리밍
 router.get("/video/:fileName", (req, res) => {
   const { fileName } = req.params;

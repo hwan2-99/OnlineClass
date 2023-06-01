@@ -113,4 +113,29 @@ module.exports = {
       return error;
     }
   },
+
+  postProblem: async (info) => {
+    console.log("problem 정보", info);
+    try {
+      const conn = await pool.getConnection();
+      console.log(info);
+
+      const { video_num, num, type, comment } = info;
+
+      const query = `Insert into problem (
+        video_num, type, comment
+      ) values (?,?,?)`;
+
+      const [{ affectedRows: result }] = await conn.query(query, [
+        video_num,
+        type,
+        comment,
+      ]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
 };
