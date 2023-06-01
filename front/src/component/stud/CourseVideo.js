@@ -32,12 +32,73 @@ const CourseVideo = () => {
   const [percent, setPercent] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
   const [showControls, setShowControls] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const toggleMuteHandler = () => {
     setVideoState((prevState) => ({
       ...prevState,
       muted: !prevState.muted,
     }));
+  };
+  const handleRestButtonClick = () => {
+    // '나머지' 버튼을 클릭했을 때 실행되는 로직 작성
+  };
+
+  const handleProblemButtonClick = () => {
+    // '문제' 버튼을 클릭했을 때 실행되는 로직 작성
+  };
+
+  const handleNoteButtonClick = () => {
+    // '노트' 버튼을 클릭했을 때 실행되는 로직 작성
+  };
+
+  const handleQualityButtonClick = () => {
+    // '퀄리티' 버튼을 클릭했을 때 실행되는 로직 작성
+  };
+  const playHandler = () => {
+    setShowButtons(false);
+    setShowControls(false); // 버튼이 사라지면 컨트롤 바도 사라지도록 설정
+  };
+  const pauseHandler = () => {
+    // 동영상이 정지됐을 때 실행되는 로직
+    setShowButtons(true);
+    setShowControls(true); // 버튼이 보이는 동안은 컨트롤 바도 보이도록 설정
+
+    const buttonRest = (
+      <Button key="rest" className={classes["video-button"]}>
+        Rest
+      </Button>
+    );
+
+    const buttonProblem = (
+      <Button key="problem" className={classes["video-button"]}>
+        Problem
+      </Button>
+    );
+
+    const buttonNote = (
+      <Button key="note" className={classes["video-button"]}>
+        Note
+      </Button>
+    );
+
+    const buttonQuality = (
+      <Button key="quality" className={classes["video-button"]}>
+        Quality
+      </Button>
+    );
+    // video-controls 요소 선택
+    const videoControls = document.querySelector(
+      `.${classes["video-controls"]}`
+    );
+
+    // video-controls 요소가 존재하는 경우에만 버튼 추가
+    if (videoControls) {
+      videoControls.appendChild(buttonRest);
+      videoControls.appendChild(buttonProblem);
+      videoControls.appendChild(buttonNote);
+      videoControls.appendChild(buttonQuality);
+    }
   };
 
   const onVolumeChangeHandler = (value) => {
@@ -67,20 +128,6 @@ const CourseVideo = () => {
     duration: 0, // 전체 시간
     currentTime: 0,
   });
-
-  const pauseHandler = () => {
-    console.log("영상이 정지 됨");
-    // const time = 12000;
-
-    // //FAQ를 나타내는 로직필요
-    // if (time < section.end) {
-    //   setSection(secList[0]);
-    // } else {
-    //   setSection(secList[1]);
-    // }
-
-    // console.log(videoRef.current);
-  };
 
   const onProgressHandler = (state) => {
     //퍼센트 계산
@@ -162,6 +209,11 @@ const CourseVideo = () => {
         onMouseEnter={onMouseEnterHandler}
         onMouseLeave={onMouseLeaveHandler}
       >
+        <div
+          className={classes["video-wrapper"]}
+          onMouseEnter={onMouseEnterHandler}
+          onMouseLeave={onMouseLeaveHandler}
+        ></div>
         <h2>강의실</h2>
         <section>
           <h1>
@@ -179,6 +231,7 @@ const CourseVideo = () => {
             url={`http://localhost:3000/${video_filename}.mp4`}
             playing={videoState.playing}
             muted={videoState.muted}
+            onPlay={playHandler}
             controls={videoState.controls}
             poster={"../../asset/asset/play"}
             volume={videoState.volume}
@@ -186,7 +239,7 @@ const CourseVideo = () => {
             onPause={pauseHandler}
             onProgress={onProgressHandler}
           />
-          {showControls && (
+          {showButtons && (
             <div className={classes["video-controls"]}>
               <div className={classes["control-item"]}>
                 {videoState.muted ? (
@@ -210,11 +263,15 @@ const CourseVideo = () => {
                   min={0}
                   max={videoRef.current ? videoRef.current.getDuration() : 0}
                   step={0.1}
-                  value={videoState.currentTime}
+                  value={currentTime}
                   onChange={onSeekHandler}
                   tooltipVisible={false}
                 />
               </div>
+              <button className={classes["control-button"]}>rest</button>
+              <button className={classes["control-button"]}>problem</button>
+              <button className={classes["control-button"]}>note</button>
+              <button className={classes["control-button"]}>quality</button>
             </div>
           )}
           <div>

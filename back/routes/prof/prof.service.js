@@ -109,6 +109,21 @@ module.exports = {
       return error;
     }
   },
+  //비디오별 문제점 불러오기
+  getProblemList: async (num) => {
+    try {
+      const conn = await pool.getConnection();
+
+      const query = `Select * from problem where video_num = ?`;
+
+      const [result] = await conn.query(query, [num]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
 
   getClassInfo: async (num) => {
     try {
