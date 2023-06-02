@@ -17,18 +17,12 @@ import ReactPlayer from "react-player";
 
 const CourseVideo = () => {
   const location = useLocation();
+  const [showPlayButton, setShowPlayButton] = useState(false);
   const videoRef = useRef();
   const studNum = useSelector((state) => state.num);
-  // const [secList, setSecList] = useState([{}]);
-  // const [section, setSection] = useState({
-  //   sec_content: "",
-  //   sec_end: "",
-  //   sec_num: null,
-  //   sec_start: "",
-  //   video_num: null,
-  // });
   const [loading, setLoading] = useState(true);
   const [qaList, setList] = useState([]);
+  const [buttonList, setButtonList] = useState([]); // 버튼 목록 상태와 setter 추가
   const [percent, setPercent] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
   const [showControls, setShowControls] = useState(false);
@@ -41,64 +35,89 @@ const CourseVideo = () => {
     }));
   };
   const handleRestButtonClick = () => {
-    // '나머지' 버튼을 클릭했을 때 실행되는 로직 작성
+    setShowButtons(false);
+    setShowPlayButton(true);
+    setShowControls(true);
+    setButtonList([]); // Clear button list
   };
 
   const handleProblemButtonClick = () => {
-    // '문제' 버튼을 클릭했을 때 실행되는 로직 작성
+    setShowButtons(false);
+    setShowPlayButton(true);
+    setShowControls(true);
+    setButtonList([]); // Clear button list
   };
 
   const handleNoteButtonClick = () => {
-    // '노트' 버튼을 클릭했을 때 실행되는 로직 작성
+    setShowButtons(false);
+    setShowPlayButton(true);
+    setShowControls(true);
+    setButtonList([]); // Clear button list
   };
 
   const handleQualityButtonClick = () => {
-    // '퀄리티' 버튼을 클릭했을 때 실행되는 로직 작성
+    setShowButtons(false);
+    setShowPlayButton(true);
+    setShowControls(true);
+    setButtonList([]); // Clear button list
   };
   const playHandler = () => {
     setShowButtons(false);
     setShowControls(false); // 버튼이 사라지면 컨트롤 바도 사라지도록 설정
   };
   const pauseHandler = () => {
-    // 동영상이 정지됐을 때 실행되는 로직
-    setShowButtons(true);
+    setShowButtons(true); // 버튼들을 보이도록 설정
+    setShowPlayButton(false); // 재생 버튼을 숨김
     setShowControls(true); // 버튼이 보이는 동안은 컨트롤 바도 보이도록 설정
 
     const buttonRest = (
-      <Button key="rest" className={classes["video-button"]}>
+      <Button
+        key="rest"
+        className={classes["video-button"]}
+        onClick={handleRestButtonClick}
+      >
         Rest
       </Button>
     );
 
     const buttonProblem = (
-      <Button key="problem" className={classes["video-button"]}>
+      <Button
+        key="problem"
+        className={classes["video-button"]}
+        onClick={handleProblemButtonClick}
+      >
         Problem
       </Button>
     );
 
     const buttonNote = (
-      <Button key="note" className={classes["video-button"]}>
+      <Button
+        key="note"
+        className={classes["video-button"]}
+        onClick={handleNoteButtonClick}
+      >
         Note
       </Button>
     );
 
     const buttonQuality = (
-      <Button key="quality" className={classes["video-button"]}>
+      <Button
+        key="quality"
+        className={classes["video-button"]}
+        onClick={handleQualityButtonClick}
+      >
         Quality
       </Button>
     );
-    // video-controls 요소 선택
-    const videoControls = document.querySelector(
-      `.${classes["video-controls"]}`
-    );
 
-    // video-controls 요소가 존재하는 경우에만 버튼 추가
-    if (videoControls) {
-      videoControls.appendChild(buttonRest);
-      videoControls.appendChild(buttonProblem);
-      videoControls.appendChild(buttonNote);
-      videoControls.appendChild(buttonQuality);
-    }
+    const newButtonList = [
+      buttonRest,
+      buttonProblem,
+      buttonNote,
+      buttonQuality,
+    ];
+
+    setButtonList(newButtonList); // 버튼 목록을 업데이트
   };
 
   const onVolumeChangeHandler = (value) => {
@@ -139,7 +158,6 @@ const CourseVideo = () => {
       currentTime: state.playedSeconds,
     });
     setCurrentTime(state.playedSeconds); // 추가된 부분
-    //퍼센트 따라서 progress 바꾸면 되겠네
   };
 
   //멈췄다 실행했다.
@@ -170,37 +188,27 @@ const CourseVideo = () => {
   const getVideoSection = async (num) => {
     const result = await studHandler.getVideoSecList(num);
     console.log("db 결과", result);
-    // setSecList(result);
-    // setSection(result[0]);
   };
 
-  // const loadList = async (num) => {
-  //   setLoading(true);
-  //   if (secList.length > 0) {
-  //     const result = await studHandler.getSecFAQList(num);
-  //     console.log("65: 결과", result);
-  //     setList(result.filter((qa) => qa.qa_response_yn === 1));
-  //   }
-  //   setLoading(false);
-  // };
-
-  // const setSectionHandler = (sec) => {
-  //   setSection(sec);
-  //   loadList(sec.sec_num);
-  // };
-
-  //비디오 섹션 불러오는 EFFECT
-  //섹션 FAQ를 불러오는 EFFECT
   useEffect(() => {
-    try {
-      setLoading(true);
-      getVideoSection(video_num);
-      setList([]);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
+    if (showPlayButton) {
+      const newButtonList = [
+        <Button key="rest" className={classes["video-button"]}>
+          Rest
+        </Button>,
+        <Button key="problem" className={classes["video-button"]}>
+          Problem
+        </Button>,
+        <Button key="note" className={classes["video-button"]}>
+          Note
+        </Button>,
+        <Button key="quality" className={classes["video-button"]}>
+          Quality
+        </Button>,
+      ];
+      setButtonList(newButtonList);
     }
-  }, [video_num]);
+  }, [showPlayButton]);
 
   return (
     <div className={classes["wrapper"]}>
@@ -248,79 +256,25 @@ const CourseVideo = () => {
                   <SoundFilled onClick={toggleMuteHandler} />
                 )}
               </div>
-              <div className={classes["control-item"]}>
-                <Slider
-                  min={0}
-                  max={1}
-                  step={0.1}
-                  value={volume}
-                  onChange={onVolumeChangeHandler}
-                  vertical
-                />
-              </div>
-              <div className={classes["control-item"]}>
-                <Slider
-                  min={0}
-                  max={videoRef.current ? videoRef.current.getDuration() : 0}
-                  step={0.1}
-                  value={currentTime}
-                  onChange={onSeekHandler}
-                  tooltipVisible={false}
-                />
-              </div>
-              <button className={classes["control-button"]}>rest</button>
-              <button className={classes["control-button"]}>problem</button>
-              <button className={classes["control-button"]}>note</button>
-              <button className={classes["control-button"]}>quality</button>
+              {buttonList}
             </div>
           )}
           <div>
-            {!videoState.playing ? (
-              <CaretRightOutlined onClick={playPauseHandler} />
-            ) : (
-              <PauseOutlined onClick={playPauseHandler} />
+            {!showButtons && (
+              <div>
+                {videoState.playing ? (
+                  <PauseOutlined onClick={playPauseHandler} />
+                ) : (
+                  <CaretRightOutlined onClick={playPauseHandler} />
+                )}
+              </div>
             )}
-
-            {/* <Progress percent={percent} steps={secList.length} /> */}
           </div>
         </section>
       </div>
       <div className={classes["FAQ-wrapper"]}>
         <section>
           <h2>FAQ</h2>
-          {/* {secList.length === 0 && <h1> 섹션이 생성 되지 않았습니다.</h1>}
-          {!(secList.length === 0) && (
-            <>
-              {secList.map((sec) => {
-                return (
-                  <div key={sec.sec_num}>
-                    <Button
-                      onClick={(e) => {
-                        setSectionHandler(sec);
-                      }}
-                      block
-                      type="dashed"
-                    >
-                      {sec.sec_content}
-                    </Button>
-                  </div>
-                );
-              })}
-              <BasicModal title={"Q&A 보내기"}>
-                <h3>Q&A보내기</h3>
-                <hr />
-                <QASend
-                  info={{
-                    sec_num: section.sec_num,
-                    std: studNum,
-                    vid: video_num,
-                    vid_stop_time: videoState.currentTime,
-                  }}
-                />
-              </BasicModal>
-            </>
-          )} */}
-
           <div className={classes["qa-wrapper"]}>
             <br />
             {!loading && (
