@@ -1,4 +1,4 @@
-const CREATE_API = "http://localhost:5000/";
+const CREATE_API = "http://localhost:3000/";
 
 const studApi = {
   classRegister: (info) => {
@@ -12,6 +12,7 @@ const studApi = {
   },
 
   studClassList: (num) => {
+    console.log(num);
     return fetch(CREATE_API + "stud/class/" + num, {
       method: "get",
       headers: {
@@ -55,6 +56,32 @@ const studApi = {
       },
       body: JSON.stringify(info),
     });
+  },
+
+  postProblem: async (info, video_num) => {
+    try {
+      const response = await fetch(
+        CREATE_API + "problem?video_num=" + video_num,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(info),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        return result;
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (error) {
+      console.log("문제 등록 실패:", error.message);
+      return false;
+    }
   },
 };
 export default studApi;

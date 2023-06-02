@@ -90,6 +90,38 @@ const studHandler = {
       return false;
     }
   },
+
+  postProblem: async (info) => {
+    try {
+      let apiResult = await studApi.postProblem(info);
+
+      const result = apiResult;
+
+      if (result.status === SUCCESS) {
+        return result;
+      }
+    } catch (error) {
+      console.log("qa add Fail");
+
+      return false;
+    }
+  },
+
+  postProblem: async (info, video_num) => {
+    try {
+      let apiResult = await studApi.postProblem(info, video_num);
+
+      const result = apiResult;
+
+      if (result.status === SUCCESS) {
+        return result;
+      }
+    } catch (error) {
+      console.log("problem add Fail");
+
+      return false;
+    }
+  },
 };
 
 export default studHandler;

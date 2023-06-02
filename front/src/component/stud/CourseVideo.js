@@ -26,8 +26,11 @@ const CourseVideo = () => {
   const [percent, setPercent] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
   const [showControls, setShowControls] = useState(false);
+  const [showTextInput, setShowTextInput] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const [volume, setVolume] = useState(0.5);
+  const [noteText, setNoteText] = useState("");
+  const [showNoteInput, setShowNoteInput] = useState(false);
   const toggleMuteHandler = () => {
     setVideoState((prevState) => ({
       ...prevState,
@@ -38,32 +41,53 @@ const CourseVideo = () => {
     setShowButtons(false);
     setShowPlayButton(true);
     setShowControls(true);
-    setButtonList([]); // Clear button list
+    setButtonList([]); // 버튼 목록 초기화
+    setShowTextInput(true); // Rest 버튼을 눌렀을 때 입력 상자 표시
   };
 
   const handleProblemButtonClick = () => {
-    setShowButtons(false);
-    setShowPlayButton(true);
-    setShowControls(true);
-    setButtonList([]); // Clear button list
+    setShowButtons(true); // 수정: setShowButtons를 true로 설정하여 버튼들을 보이도록 변경
+    setShowPlayButton(false); // 재생 버튼 숨김
+    setShowTextInput(true); // 텍스트 입력 상자 보임
+    setShowControls(false); // 컨트롤 바 숨김
+    setButtonList([]); // 버튼 목록 초기화
+  };
+
+  const handleTextSubmit = () => {
+    setShowPlayButton(true); // 재생 버튼 보임
+    setShowTextInput(false); // 텍스트 입력 상자 숨김
+    setShowControls(true); // 컨트롤 바 보임
   };
 
   const handleNoteButtonClick = () => {
-    setShowButtons(false);
-    setShowPlayButton(true);
-    setShowControls(true);
-    setButtonList([]); // Clear button list
+    setShowButtons(true); // 버튼들을 보이도록 설정
+    setShowPlayButton(false); // 재생 버튼을 숨김
+    setShowTextInput(false); // 텍스트 입력 상자를 숨김
+    setShowControls(false); // 컨트롤 바를 숨김
+    setButtonList([]); // 버튼 목록 초기화
+    setShowNoteInput(true); // 입력 폼을 보이도록 설정
   };
 
   const handleQualityButtonClick = () => {
     setShowButtons(false);
     setShowPlayButton(true);
     setShowControls(true);
-    setButtonList([]); // Clear button list
+    setButtonList([]); // 버튼 목록 초기화
   };
   const playHandler = () => {
     setShowButtons(false);
     setShowControls(false); // 버튼이 사라지면 컨트롤 바도 사라지도록 설정
+  };
+  const handleNoteTextSubmit = () => {
+    // 재생 버튼을 보이도록 상태 변경
+    setShowPlayButton(true);
+    // input 폼을 숨김
+    setShowNoteInput(false);
+    console.log("Submitted note:", noteText);
+    setShowPlayButton(true); // 재생 버튼을 보임
+    setShowTextInput(false); // 텍스트 입력 상자를 숨김
+    setShowControls(true); // 컨트롤 바를 보임
+    setNoteText(""); // 노트 텍스트 초기화
   };
   const pauseHandler = () => {
     setShowButtons(true); // 버튼들을 보이도록 설정
@@ -137,7 +161,7 @@ const CourseVideo = () => {
 
   //videoState
   const [videoState, setVideoState] = useState({
-    playing: true, // 재생중인지
+    playing: false, // 재생중인지
     muted: false, // 음소거인지
     controls: false, // 기본으로 제공되는 컨트롤러 사용할건지
     volume: 0.5, // 볼륨크기
@@ -169,7 +193,11 @@ const CourseVideo = () => {
 
     console.log(videoState);
   };
-
+  const handleTextChange = (event) => {
+    // Handle text input change event
+    // ...
+    setShowPlayButton(true);
+  };
   const {
     video_num,
     video_order,
@@ -247,7 +275,7 @@ const CourseVideo = () => {
             onPause={pauseHandler}
             onProgress={onProgressHandler}
           />
-          {showButtons && (
+          {showButtons && ( //비디오 컨트롤 버튼
             <div className={classes["video-controls"]}>
               <div className={classes["control-item"]}>
                 {videoState.muted ? (
@@ -256,7 +284,35 @@ const CourseVideo = () => {
                   <SoundFilled onClick={toggleMuteHandler} />
                 )}
               </div>
-              {buttonList}
+              {showNoteInput ? (
+                <div>
+                  <input
+                    type="text"
+                    value={noteText}
+                    onChange={(e) => setNoteText(e.target.value)}
+                  />
+                  <Button onClick={handleNoteTextSubmit}>Submit</Button>
+                </div>
+              ) : (
+                <div>
+                  {showTextInput ? (
+                    <div>
+                      <input type="text" onChange={handleTextChange} />
+                      <Button onClick={handleTextSubmit}>Submit</Button>
+                    </div>
+                  ) : showPlayButton ? (
+                    <Button
+                      key="play"
+                      className={classes["video-button"]}
+                      onClick={playPauseHandler}
+                    >
+                      Play
+                    </Button>
+                  ) : (
+                    buttonList
+                  )}
+                </div>
+              )}
             </div>
           )}
           <div>
